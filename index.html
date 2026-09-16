@@ -3,11 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#65d36e">
 
     <title>시지중학교 비공식 마인크래프트 서버</title>
 
+    <!-- Supabase 라이브러리 -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <style>
+        /* =========================
+           기본 설정
+        ========================= */
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -20,35 +26,48 @@
 
         body {
             font-family: Arial, "Noto Sans KR", sans-serif;
-            background: #0d151c;
+            background: #0b1117;
             color: white;
             line-height: 1.6;
             overflow-x: hidden;
         }
 
         a {
-            color: inherit;
             text-decoration: none;
+            color: inherit;
+        }
+
+        button,
+        input {
+            font-family: inherit;
+        }
+
+        button {
+            cursor: pointer;
         }
 
         .container {
             width: 90%;
-            max-width: 1150px;
+            max-width: 1200px;
             margin: auto;
         }
 
-        /* 헤더 */
+        /* =========================
+           헤더
+        ========================= */
+
         header {
             position: fixed;
             top: 0;
+            left: 0;
             width: 100%;
             z-index: 1000;
-            background: rgba(7, 12, 16, 0.92);
+            background: rgba(7, 12, 17, 0.9);
             border-bottom: 1px solid rgba(255,255,255,0.08);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
         }
 
-        nav {
+        .navbar {
             height: 70px;
             display: flex;
             align-items: center;
@@ -56,37 +75,86 @@
         }
 
         .logo {
-            font-size: 19px;
-            font-weight: bold;
             color: #65d36e;
+            font-size: 19px;
+            font-weight: 900;
+            letter-spacing: 1px;
         }
 
-        .menu {
+        .nav-menu {
             display: flex;
-            gap: 25px;
+            align-items: center;
+            gap: 24px;
             list-style: none;
         }
 
-        .menu a {
-            color: #dce7df;
+        .nav-menu a {
+            color: #cbd5ce;
             font-size: 14px;
             transition: 0.3s;
         }
 
-        .menu a:hover {
+        .nav-menu a:hover {
             color: #65d36e;
         }
 
-        /* 메인 */
+        .login-button {
+            padding: 9px 16px;
+            border: 1px solid #65d36e;
+            border-radius: 7px;
+            color: #65d36e;
+            background: transparent;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .login-button:hover {
+            background: #65d36e;
+            color: #081009;
+        }
+
+        .user-area {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+        }
+
+        .user-name {
+            color: #65d36e;
+            font-weight: bold;
+        }
+
+        .logout-button {
+            padding: 8px 12px;
+            border: 1px solid #555;
+            border-radius: 6px;
+            background: transparent;
+            color: #ccc;
+            font-size: 12px;
+        }
+
+        .logout-button:hover {
+            background: #333;
+        }
+
+        /* =========================
+           메인 히어로
+        ========================= */
+
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 100px 20px 60px;
+            padding: 110px 20px 70px;
+
             background:
-                linear-gradient(rgba(4, 10, 15, 0.7), rgba(4, 10, 15, 0.93)),
+                linear-gradient(
+                    rgba(4, 10, 15, 0.72),
+                    rgba(4, 10, 15, 0.94)
+                ),
                 url("minecraft.png") center/cover no-repeat;
         }
 
@@ -96,21 +164,21 @@
 
         .badge {
             display: inline-block;
-            padding: 7px 15px;
+            padding: 7px 16px;
             margin-bottom: 20px;
             border: 1px solid rgba(101,211,110,0.5);
             border-radius: 30px;
-            color: #8df096;
             background: rgba(101,211,110,0.08);
+            color: #8df096;
             font-size: 13px;
         }
 
         .hero h1 {
-            font-size: clamp(38px, 7vw, 75px);
+            font-size: clamp(40px, 7vw, 78px);
             line-height: 1.15;
             font-weight: 900;
             margin-bottom: 22px;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.8);
+            text-shadow: 0 5px 25px rgba(0,0,0,0.8);
         }
 
         .hero h1 span {
@@ -123,17 +191,39 @@
             margin-bottom: 30px;
         }
 
+        .server-address-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+        }
+
         .server-address {
-            display: inline-block;
-            padding: 15px 25px;
-            margin-bottom: 25px;
+            padding: 15px 22px;
             border: 1px solid #65d36e;
             border-radius: 8px;
             background: rgba(101,211,110,0.1);
             color: #8df096;
-            font-size: 18px;
+            font-size: 17px;
             font-weight: bold;
             letter-spacing: 1px;
+        }
+
+        .copy-button {
+            padding: 15px 18px;
+            border: none;
+            border-radius: 8px;
+            background: #65d36e;
+            color: #081009;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .copy-button:hover {
+            background: #8df096;
+            transform: translateY(-2px);
         }
 
         .buttons {
@@ -145,7 +235,7 @@
 
         .btn {
             display: inline-block;
-            padding: 13px 24px;
+            padding: 13px 23px;
             border-radius: 8px;
             font-weight: bold;
             transition: 0.3s;
@@ -171,7 +261,10 @@
             transform: translateY(-3px);
         }
 
-        /* 섹션 */
+        /* =========================
+           섹션
+        ========================= */
+
         section {
             padding: 90px 0;
         }
@@ -188,7 +281,10 @@
             margin-bottom: 45px;
         }
 
-        /* 서버 특징 */
+        /* =========================
+           서버 소개
+        ========================= */
+
         .info-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -205,11 +301,12 @@
         }
 
         .info-card:hover {
-            transform: translateY(-7px);
+            transform: translateY(-8px);
             border-color: #65d36e;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
         }
 
-        .icon {
+        .info-icon {
             font-size: 42px;
             margin-bottom: 15px;
         }
@@ -224,10 +321,56 @@
             font-size: 14px;
         }
 
-        /* 접속 방법 */
-        .how-to {
-            background: #111b24;
+        /* =========================
+           참여 조건
+        ========================= */
+
+        .participation {
+            background: #101a23;
         }
+
+        .participation-box {
+            max-width: 850px;
+            margin: auto;
+            padding: 40px;
+            text-align: center;
+            background: linear-gradient(
+                135deg,
+                #17232d,
+                #1c2d36
+            );
+            border: 1px solid rgba(101,211,110,0.3);
+            border-radius: 18px;
+        }
+
+        .participation-box h3 {
+            color: #65d36e;
+            font-size: 25px;
+            margin-bottom: 15px;
+        }
+
+        .participation-box p {
+            color: #d1d9d3;
+            margin-bottom: 25px;
+        }
+
+        .condition-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .condition-item {
+            padding: 15px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 9px;
+            color: #dce7df;
+        }
+
+        /* =========================
+           접속 방법
+        ========================= */
 
         .steps {
             display: grid;
@@ -237,14 +380,14 @@
 
         .step {
             padding: 30px;
-            background: #192832;
+            background: #17232d;
             border-radius: 14px;
             text-align: center;
         }
 
         .step-number {
-            width: 45px;
-            height: 45px;
+            width: 46px;
+            height: 46px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -252,8 +395,8 @@
             background: #65d36e;
             color: #081009;
             border-radius: 50%;
-            font-weight: bold;
             font-size: 20px;
+            font-weight: bold;
         }
 
         .step h3 {
@@ -265,7 +408,10 @@
             font-size: 14px;
         }
 
-        /* 서버 정보 */
+        /* =========================
+           서버 정보
+        ========================= */
+
         .server-box {
             max-width: 760px;
             margin: auto;
@@ -297,7 +443,14 @@
             text-align: right;
         }
 
-        /* 공지 */
+        /* =========================
+           공지사항
+        ========================= */
+
+        .notice-section {
+            background: #101a23;
+        }
+
         .notice-list {
             max-width: 850px;
             margin: auto;
@@ -324,7 +477,10 @@
             font-size: 13px;
         }
 
-        /* 푸터 */
+        /* =========================
+           푸터
+        ========================= */
+
         footer {
             padding: 45px 20px;
             text-align: center;
@@ -358,21 +514,176 @@
             font-size: 13px;
         }
 
-        /* 모바일 */
+        /* =========================
+           모달
+        ========================= */
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            width: 100%;
+            max-width: 430px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 32px;
+            position: relative;
+            background: #17232d;
+            border: 1px solid rgba(101,211,110,0.3);
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            animation: modalOpen 0.2s ease;
+        }
+
+        @keyframes modalOpen {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 18px;
+            border: none;
+            background: transparent;
+            color: #aaa;
+            font-size: 25px;
+        }
+
+        .close-modal:hover {
+            color: white;
+        }
+
+        .modal h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #65d36e;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            color: #dce7df;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #35434d;
+            border-radius: 7px;
+            outline: none;
+            background: #0f1921;
+            color: white;
+            font-size: 14px;
+        }
+
+        .form-group input:focus {
+            border-color: #65d36e;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 13px;
+            margin-top: 8px;
+            border: none;
+            border-radius: 7px;
+            background: #65d36e;
+            color: #081009;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .form-submit:hover {
+            background: #8df096;
+        }
+
+        .form-submit:disabled {
+            opacity: 0.6;
+            cursor: wait;
+        }
+
+        .modal-switch {
+            margin-top: 20px;
+            text-align: center;
+            color: #aebbb2;
+            font-size: 13px;
+        }
+
+        .modal-switch button {
+            border: none;
+            background: none;
+            color: #65d36e;
+            font-weight: bold;
+        }
+
+        .form-message {
+            min-height: 22px;
+            margin-top: 12px;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .success {
+            color: #65d36e;
+        }
+
+        .error {
+            color: #ff7777;
+        }
+
+        /* =========================
+           모바일
+        ========================= */
+
         @media (max-width: 768px) {
-            nav {
+
+            .navbar {
                 height: 60px;
             }
 
             .logo {
-                font-size: 15px;
+                font-size: 14px;
             }
 
-            .menu {
-                gap: 10px;
+            .nav-menu {
+                gap: 8px;
             }
 
-            .menu a {
+            .nav-menu a {
+                display: none;
+            }
+
+            .login-button {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+
+            .user-area {
                 font-size: 11px;
             }
 
@@ -386,6 +697,11 @@
 
             .server-address {
                 font-size: 14px;
+                padding: 13px 15px;
+            }
+
+            .copy-button {
+                padding: 13px 15px;
             }
 
             section {
@@ -401,6 +717,14 @@
                 grid-template-columns: 1fr;
             }
 
+            .condition-list {
+                grid-template-columns: 1fr;
+            }
+
+            .participation-box {
+                padding: 25px 18px;
+            }
+
             .server-box {
                 padding: 20px;
             }
@@ -413,33 +737,67 @@
                 flex-direction: column;
                 gap: 5px;
             }
+
+            .modal {
+                padding: 28px 22px;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <!-- 헤더 -->
+    <!-- =========================
+         헤더
+    ========================= -->
+
     <header>
         <div class="container">
-            <nav>
-                <a href="#home" class="logo">SIJI MINECRAFT</a>
+            <nav class="navbar">
 
-                <ul class="menu">
+                <a href="#home" class="logo">
+                    SIJI MINECRAFT
+                </a>
+
+                <ul class="nav-menu">
                     <li><a href="#server">서버 소개</a></li>
                     <li><a href="#join">접속 방법</a></li>
                     <li><a href="#notice">공지사항</a></li>
+
+                    <li>
+                        <button
+                            class="login-button"
+                            id="loginOpenButton"
+                            onclick="openLoginModal()">
+                            로그인 / 회원가입
+                        </button>
+
+                        <div class="user-area" id="userArea">
+                            <span class="user-name" id="userName"></span>
+                            <button
+                                class="logout-button"
+                                onclick="logoutUser()">
+                                로그아웃
+                            </button>
+                        </div>
+                    </li>
                 </ul>
+
             </nav>
         </div>
     </header>
 
 
-    <!-- 메인 -->
+    <!-- =========================
+         메인
+    ========================= -->
+
     <section class="hero" id="home">
         <div class="hero-content">
 
-            <div class="badge">시지중학교 비공식 마인크래프트 서버</div>
+            <div class="badge">
+                시지중학교 비공식 마인크래프트 서버
+            </div>
 
             <h1>
                 함께 만드는<br>
@@ -447,15 +805,25 @@
             </h1>
 
             <p>
-                친구들과 함께 건축하고, 모험하고, 새로운 추억을 만들어 보세요.
+                친구들과 함께 건축하고, 탐험하고, 새로운 추억을 만들어 보세요.
             </p>
 
-            <div class="server-address">
-                sijiminecraft.m-c.kr
+            <div class="server-address-box">
+                <div class="server-address" id="serverAddress">
+                    sijiminecraft.m-c.kr
+                </div>
+
+                <button
+                    class="copy-button"
+                    onclick="copyServerAddress()">
+                    주소 복사
+                </button>
             </div>
 
             <div class="buttons">
-                <a href="#join" class="btn btn-primary">서버 접속하기</a>
+                <a href="#join" class="btn btn-primary">
+                    서버 접속하기
+                </a>
 
                 <a
                     href="https://www.instagram.com/sijiminecraft.m_c.kr/"
@@ -469,11 +837,15 @@
     </section>
 
 
-    <!-- 서버 소개 -->
+    <!-- =========================
+         서버 소개
+    ========================= -->
+
     <section id="server">
         <div class="container">
 
             <h2 class="section-title">서버 소개</h2>
+
             <p class="section-subtitle">
                 시지중학교 학생들을 위한 비공식 마인크래프트 커뮤니티 서버입니다.
             </p>
@@ -481,7 +853,7 @@
             <div class="info-grid">
 
                 <div class="info-card">
-                    <div class="icon">🌍</div>
+                    <div class="info-icon">🌍</div>
                     <h3>자유로운 생존</h3>
                     <p>
                         친구들과 함께 집을 짓고 자원을 모으며
@@ -490,7 +862,7 @@
                 </div>
 
                 <div class="info-card">
-                    <div class="icon">👥</div>
+                    <div class="info-icon">👥</div>
                     <h3>친구들과 함께</h3>
                     <p>
                         학교 친구들과 소통하며 협동하고
@@ -499,7 +871,7 @@
                 </div>
 
                 <div class="info-card">
-                    <div class="icon">⚔️</div>
+                    <div class="info-icon">⚔️</div>
                     <h3>다양한 콘텐츠</h3>
                     <p>
                         건축, 탐험, 미니게임 등 다양한 활동을
@@ -512,11 +884,72 @@
     </section>
 
 
-    <!-- 접속 방법 -->
-    <section class="how-to" id="join">
+    <!-- =========================
+         참여 조건
+    ========================= -->
+
+    <section class="participation">
+        <div class="container">
+
+            <h2 class="section-title">참여 조건</h2>
+
+            <p class="section-subtitle">
+                누구나 자유롭게 참여할 수 있습니다.
+            </p>
+
+            <div class="participation-box">
+
+                <h3>누구나 참여 가능</h3>
+
+                <p>
+                    시지중학교 학생이 아니어도 서버에 참여할 수 있습니다.
+                    다른 학교 학생도 환영합니다.
+                </p>
+
+                <div class="condition-list">
+                    <div class="condition-item">
+                        ✅ 누구나 참여 가능
+                    </div>
+
+                    <div class="condition-item">
+                        ✅ 친구들과 함께 플레이 가능
+                    </div>
+
+                    <div class="condition-item">
+                        ✅ Java Edition 사용자
+                    </div>
+
+                    <div class="condition-item">
+                        ✅ 기본적인 서버 규칙 준수
+                    </div>
+                </div>
+
+                <p style="font-size:14px; color:#9ca8a0;">
+                    타 학교 학생은 아래 인스타그램으로 문의해 주세요.
+                </p>
+
+                <a
+                    href="https://www.instagram.com/sijiminecraft.m_c.kr/"
+                    target="_blank"
+                    class="btn btn-primary">
+                    타 학교 학생 문의하기
+                </a>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- =========================
+         접속 방법
+    ========================= -->
+
+    <section id="join">
         <div class="container">
 
             <h2 class="section-title">서버 접속 방법</h2>
+
             <p class="section-subtitle">
                 아래 세 단계만 따라 하면 서버에 접속할 수 있습니다.
             </p>
@@ -533,7 +966,7 @@
 
                 <div class="step">
                     <div class="step-number">2</div>
-                    <h3>멀티플레이 접속</h3>
+                    <h3>멀티플레이 선택</h3>
                     <p>
                         멀티플레이에서 서버 추가 버튼을 선택합니다.
                     </p>
@@ -543,7 +976,7 @@
                     <div class="step-number">3</div>
                     <h3>주소 입력</h3>
                     <p>
-                        서버 주소에 sijiminecraft.m-c.kr을 입력합니다.
+                        sijiminecraft.m-c.kr을 입력하고 접속합니다.
                     </p>
                 </div>
 
@@ -553,11 +986,15 @@
     </section>
 
 
-    <!-- 서버 정보 -->
+    <!-- =========================
+         서버 정보
+    ========================= -->
+
     <section>
         <div class="container">
 
             <h2 class="section-title">서버 정보</h2>
+
             <p class="section-subtitle">
                 현재 서버 접속에 필요한 기본 정보입니다.
             </p>
@@ -580,8 +1017,8 @@
                 </div>
 
                 <div class="server-row">
-                    <strong>권장 플레이</strong>
-                    <span>친구들과 함께 즐기기</span>
+                    <strong>참여 조건</strong>
+                    <span>누구나 참여 가능</span>
                 </div>
 
             </div>
@@ -590,11 +1027,15 @@
     </section>
 
 
-    <!-- 공지사항 -->
-    <section id="notice" class="how-to">
+    <!-- =========================
+         공지사항
+    ========================= -->
+
+    <section id="notice" class="notice-section">
         <div class="container">
 
             <h2 class="section-title">공지사항</h2>
+
             <p class="section-subtitle">
                 서버 운영과 관련된 안내사항입니다.
             </p>
@@ -605,21 +1046,30 @@
                     <div class="notice-title">
                         서버 이용 시 다른 플레이어를 배려해 주세요.
                     </div>
-                    <div class="notice-date">공지</div>
+
+                    <div class="notice-date">
+                        서버 안내
+                    </div>
                 </div>
 
                 <div class="notice">
                     <div class="notice-title">
                         서버 주소는 sijiminecraft.m-c.kr입니다.
                     </div>
-                    <div class="notice-date">서버 안내</div>
+
+                    <div class="notice-date">
+                        접속 안내
+                    </div>
                 </div>
 
                 <div class="notice">
                     <div class="notice-title">
-                        서버 관련 문의 및 소식은 인스타그램을 확인해 주세요.
+                        타 학교 학생은 서버 인스타그램으로 문의해 주세요.
                     </div>
-                    <div class="notice-date">안내</div>
+
+                    <div class="notice-date">
+                        참여 안내
+                    </div>
                 </div>
 
             </div>
@@ -628,8 +1078,12 @@
     </section>
 
 
-    <!-- 푸터 -->
+    <!-- =========================
+         푸터
+    ========================= -->
+
     <footer>
+
         <h3>SIJI MINECRAFT</h3>
 
         <p>
@@ -655,32 +1109,716 @@
         <p class="copyright">
             © 2026 Siji Minecraft. Unofficial community server.
         </p>
+
     </footer>
 
 
+    <!-- =========================
+         로그인 / 회원가입 모달
+    ========================= -->
+
+    <div class="modal-overlay" id="authModal">
+
+        <div class="modal">
+
+            <button
+                class="close-modal"
+                onclick="closeAuthModal()">
+                ×
+            </button>
+
+            <!-- 로그인 폼 -->
+            <div id="loginFormContainer">
+
+                <h2>로그인</h2>
+
+                <form onsubmit="loginUser(event)">
+
+                    <div class="form-group">
+                        <label for="login-email">이메일</label>
+                        <input
+                            type="email"
+                            id="login-email"
+                            placeholder="example@email.com"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="login-password">비밀번호</label>
+                        <input
+                            type="password"
+                            id="login-password"
+                            placeholder="비밀번호"
+                            required>
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="form-submit"
+                        id="loginSubmitButton">
+                        로그인
+                    </button>
+
+                    <div
+                        class="form-message"
+                        id="loginMessage">
+                    </div>
+
+                </form>
+
+                <div class="modal-switch">
+                    아직 회원이 아니신가요?
+                    <button onclick="showSignupForm()">
+                        회원가입
+                    </button>
+                </div>
+
+            </div>
+
+
+            <!-- 회원가입 폼 -->
+            <div id="signupFormContainer" style="display:none;">
+
+                <h2>회원가입</h2>
+
+                <form onsubmit="signupUser(event)">
+
+                    <div class="form-group">
+                        <label for="signup-nickname">닉네임</label>
+                        <input
+                            type="text"
+                            id="signup-nickname"
+                            placeholder="게임 닉네임"
+                            minlength="2"
+                            maxlength="20"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signup-email">이메일</label>
+                        <input
+                            type="email"
+                            id="signup-email"
+                            placeholder="example@email.com"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signup-password">비밀번호</label>
+                        <input
+                            type="password"
+                            id="signup-password"
+                            placeholder="6자 이상"
+                            minlength="6"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signup-password-confirm">
+                            비밀번호 확인
+                        </label>
+
+                        <input
+                            type="password"
+                            id="signup-password-confirm"
+                            placeholder="비밀번호 다시 입력"
+                            minlength="6"
+                            required>
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="form-submit"
+                        id="signupSubmitButton">
+                        회원가입
+                    </button>
+
+                    <div
+                        class="form-message"
+                        id="signupMessage">
+                    </div>
+
+                </form>
+
+                <div class="modal-switch">
+                    이미 회원이신가요?
+                    <button onclick="showLoginForm()">
+                        로그인
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         JavaScript
+    ========================= -->
+
     <script>
-        // 서버 주소 클릭 시 클립보드 복사
-        const address = document.querySelector(".server-address");
 
-        address.style.cursor = "pointer";
+        /*
+        ============================================
+        Supabase 설정
+        ============================================
 
-        address.title = "클릭하면 서버 주소가 복사됩니다.";
+        아래 두 곳만 네 Supabase 정보로 변경하면 된다.
 
-        address.addEventListener("click", async function () {
-            const text = "sijiminecraft.m-c.kr";
+        절대 service_role 키를 사용하지 말 것.
+        Publishable key 또는 anon public key 사용.
+        */
+
+        const SUPABASE_URL = "https://gpmnozujzhebnkpnrfik.supabase.co";
+
+        const SUPABASE_KEY = "sb_publishable_Df6zehKD_EARd9VnjMmtZw_GXvjE0uA";
+
+
+        /*
+        Supabase 연결
+        */
+
+        let supabaseClient = null;
+
+        try {
+            if (
+                SUPABASE_URL.startsWith("http") &&
+                !SUPABASE_URL.includes("ENTER_HERE") &&
+                !SUPABASE_KEY.includes("ENTER_HERE")
+            ) {
+                supabaseClient = window.supabase.createClient(
+                    SUPABASE_URL,
+                    SUPABASE_KEY
+                );
+            }
+        } catch (error) {
+            console.error("Supabase 연결 오류:", error);
+        }
+
+
+        /*
+        ============================================
+        서버 주소 복사
+        ============================================
+        */
+
+        async function copyServerAddress() {
+
+            const serverAddress = "sijiminecraft.m-c.kr";
 
             try {
-                await navigator.clipboard.writeText(text);
-                const original = address.textContent;
-                address.textContent = "복사 완료!";
+
+                await navigator.clipboard.writeText(serverAddress);
+
+                const button = document.querySelector(".copy-button");
+                const originalText = button.textContent;
+
+                button.textContent = "복사 완료!";
 
                 setTimeout(() => {
-                    address.textContent = original;
+                    button.textContent = originalText;
                 }, 1500);
+
             } catch (error) {
-                alert("서버 주소: " + text);
+
+                alert("서버 주소: " + serverAddress);
+
             }
+
+        }
+
+
+        /*
+        ============================================
+        로그인 모달 열기 / 닫기
+        ============================================
+        */
+
+        function openLoginModal() {
+
+            document.getElementById("authModal")
+                .classList.add("active");
+
+            showLoginForm();
+
+        }
+
+
+        function closeAuthModal() {
+
+            document.getElementById("authModal")
+                .classList.remove("active");
+
+            clearMessages();
+
+        }
+
+
+        function showLoginForm() {
+
+            document.getElementById("loginFormContainer")
+                .style.display = "block";
+
+            document.getElementById("signupFormContainer")
+                .style.display = "none";
+
+            clearMessages();
+
+        }
+
+
+        function showSignupForm() {
+
+            document.getElementById("loginFormContainer")
+                .style.display = "none";
+
+            document.getElementById("signupFormContainer")
+                .style.display = "block";
+
+            clearMessages();
+
+        }
+
+
+        function clearMessages() {
+
+            document.getElementById("loginMessage").textContent = "";
+            document.getElementById("signupMessage").textContent = "";
+
+        }
+
+
+        /*
+        ============================================
+        회원가입
+        ============================================
+        */
+
+        async function signupUser(event) {
+
+            event.preventDefault();
+
+            const nickname =
+                document.getElementById("signup-nickname").value.trim();
+
+            const email =
+                document.getElementById("signup-email").value.trim();
+
+            const password =
+                document.getElementById("signup-password").value;
+
+            const passwordConfirm =
+                document.getElementById("signup-password-confirm").value;
+
+            const message =
+                document.getElementById("signupMessage");
+
+            const button =
+                document.getElementById("signupSubmitButton");
+
+
+            message.textContent = "";
+            message.className = "form-message";
+
+
+            if (!supabaseClient) {
+
+                message.textContent =
+                    "먼저 Supabase URL과 Publishable Key를 입력해 주세요.";
+
+                message.classList.add("error");
+
+                return;
+
+            }
+
+
+            if (password !== passwordConfirm) {
+
+                message.textContent =
+                    "비밀번호가 서로 일치하지 않습니다.";
+
+                message.classList.add("error");
+
+                return;
+
+            }
+
+
+            if (password.length < 6) {
+
+                message.textContent =
+                    "비밀번호는 6자 이상이어야 합니다.";
+
+                message.classList.add("error");
+
+                return;
+
+            }
+
+
+            button.disabled = true;
+            button.textContent = "가입 중...";
+
+
+            try {
+
+                const { data, error } =
+                    await supabaseClient.auth.signUp({
+
+                        email: email,
+
+                        password: password,
+
+                        options: {
+                            data: {
+                                nickname: nickname
+                            }
+                        }
+
+                    });
+
+
+                if (error) {
+                    throw error;
+                }
+
+
+                message.textContent =
+                    "회원가입이 완료되었습니다! 이메일 인증이 필요한 경우 이메일을 확인해 주세요.";
+
+                message.classList.add("success");
+
+
+                document.getElementById("signup-nickname").value = "";
+                document.getElementById("signup-email").value = "";
+                document.getElementById("signup-password").value = "";
+                document.getElementById("signup-password-confirm").value = "";
+
+
+                setTimeout(() => {
+
+                    if (data.session) {
+                        closeAuthModal();
+                    } else {
+                        showLoginForm();
+                    }
+
+                }, 1800);
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                message.textContent =
+                    "회원가입 실패: " + translateAuthError(error.message);
+
+                message.classList.add("error");
+
+            } finally {
+
+                button.disabled = false;
+                button.textContent = "회원가입";
+
+            }
+
+        }
+
+
+        /*
+        ============================================
+        로그인
+        ============================================
+        */
+
+        async function loginUser(event) {
+
+            event.preventDefault();
+
+            const email =
+                document.getElementById("login-email").value.trim();
+
+            const password =
+                document.getElementById("login-password").value;
+
+            const message =
+                document.getElementById("loginMessage");
+
+            const button =
+                document.getElementById("loginSubmitButton");
+
+
+            message.textContent = "";
+            message.className = "form-message";
+
+
+            if (!supabaseClient) {
+
+                message.textContent =
+                    "먼저 Supabase URL과 Publishable Key를 입력해 주세요.";
+
+                message.classList.add("error");
+
+                return;
+
+            }
+
+
+            button.disabled = true;
+            button.textContent = "로그인 중...";
+
+
+            try {
+
+                const { data, error } =
+                    await supabaseClient.auth.signInWithPassword({
+
+                        email: email,
+
+                        password: password
+
+                    });
+
+
+                if (error) {
+                    throw error;
+                }
+
+
+                message.textContent =
+                    "로그인되었습니다!";
+
+                message.classList.add("success");
+
+
+                setTimeout(() => {
+
+                    closeAuthModal();
+                    updateUserUI(data.user);
+
+                }, 800);
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                message.textContent =
+                    "로그인 실패: " + translateAuthError(error.message);
+
+                message.classList.add("error");
+
+            } finally {
+
+                button.disabled = false;
+                button.textContent = "로그인";
+
+            }
+
+        }
+
+
+        /*
+        ============================================
+        로그아웃
+        ============================================
+        */
+
+        async function logoutUser() {
+
+            if (!supabaseClient) {
+                return;
+            }
+
+
+            const { error } =
+                await supabaseClient.auth.signOut();
+
+
+            if (error) {
+
+                alert("로그아웃 실패: " + error.message);
+
+                return;
+
+            }
+
+
+            updateUserUI(null);
+
+            alert("로그아웃되었습니다.");
+
+        }
+
+
+        /*
+        ============================================
+        로그인 상태 확인
+        ============================================
+        */
+
+        async function checkLoginStatus() {
+
+            if (!supabaseClient) {
+
+                return;
+
+            }
+
+
+            const {
+                data: { session }
+            } = await supabaseClient.auth.getSession();
+
+
+            if (session && session.user) {
+
+                updateUserUI(session.user);
+
+            } else {
+
+                updateUserUI(null);
+
+            }
+
+
+            supabaseClient.auth.onAuthStateChange(
+                (event, session) => {
+
+                    if (session && session.user) {
+
+                        updateUserUI(session.user);
+
+                    } else {
+
+                        updateUserUI(null);
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        /*
+        ============================================
+        화면의 로그인 상태 변경
+        ============================================
+        */
+
+        function updateUserUI(user) {
+
+            const loginButton =
+                document.getElementById("loginOpenButton");
+
+            const userArea =
+                document.getElementById("userArea");
+
+            const userName =
+                document.getElementById("userName");
+
+
+            if (user) {
+
+                const nickname =
+                    user.user_metadata?.nickname || user.email.split("@")[0];
+
+                loginButton.style.display = "none";
+
+                userArea.style.display = "flex";
+
+                userName.textContent =
+                    nickname + "님";
+
+            } else {
+
+                loginButton.style.display = "block";
+
+                userArea.style.display = "none";
+
+                userName.textContent = "";
+
+            }
+
+        }
+
+
+        /*
+        ============================================
+        Supabase 오류 메시지 한국어 처리
+        ============================================
+        */
+
+        function translateAuthError(message) {
+
+            if (!message) {
+                return "알 수 없는 오류가 발생했습니다.";
+            }
+
+            if (message.includes("Invalid login credentials")) {
+                return "이메일 또는 비밀번호가 올바르지 않습니다.";
+            }
+
+            if (message.includes("User already registered")) {
+                return "이미 가입된 이메일입니다.";
+            }
+
+            if (message.includes("Password should be at least")) {
+                return "비밀번호는 6자 이상이어야 합니다.";
+            }
+
+            if (message.includes("Unable to validate email")) {
+                return "올바른 이메일 주소를 입력해 주세요.";
+            }
+
+            return message;
+
+        }
+
+
+        /*
+        ============================================
+        모달 바깥 클릭 시 닫기
+        ============================================
+        */
+
+        document.getElementById("authModal")
+            .addEventListener("click", function(event) {
+
+                if (event.target === this) {
+                    closeAuthModal();
+                }
+
+            });
+
+
+        /*
+        ============================================
+        ESC 키로 모달 닫기
+        ============================================
+        */
+
+        document.addEventListener("keydown", function(event) {
+
+            if (event.key === "Escape") {
+                closeAuthModal();
+            }
+
         });
+
+
+        /*
+        ============================================
+        페이지 시작 시 로그인 상태 확인
+        ============================================
+        */
+
+        checkLoginStatus();
+
     </script>
 
 </body>
