@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#65d36e">
+
+    <title>시지중학교 비공식 마인크래프트 서버</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, "Noto Sans KR", sans-serif;
+            background: #0d151c;
+            color: white;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1150px;
+            margin: auto;
+        }
+
+        /* 헤더 */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(7, 12, 16, 0.92);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 19px;
+            font-weight: bold;
+            color: #65d36e;
+        }
+
+        .menu {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+        }
+
+        .menu a {
+            color: #dce7df;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .menu a:hover {
+            color: #65d36e;
+        }
+
+        /* 메인 */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 100px 20px 60px;
+            background:
+                linear-gradient(rgba(4, 10, 15, 0.7), rgba(4, 10, 15, 0.93)),
+                url("minecraft.png") center/cover no-repeat;
+        }
+
+        .hero-content {
+            max-width: 850px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 7px 15px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(101,211,110,0.5);
+            border-radius: 30px;
+            color: #8df096;
+            background: rgba(101,211,110,0.08);
+            font-size: 13px;
+        }
+
+        .hero h1 {
+            font-size: clamp(38px, 7vw, 75px);
+            line-height: 1.15;
+            font-weight: 900;
+            margin-bottom: 22px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.8);
+        }
+
+        .hero h1 span {
+            color: #65d36e;
+        }
+
+        .hero p {
+            color: #d1d9d3;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .server-address {
+            display: inline-block;
+            padding: 15px 25px;
+            margin-bottom: 25px;
+            border: 1px solid #65d36e;
+            border-radius: 8px;
+            background: rgba(101,211,110,0.1);
+            color: #8df096;
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 13px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn-primary {
+            background: #65d36e;
+            color: #081009;
+        }
+
+        .btn-primary:hover {
+            background: #8df096;
+            transform: translateY(-3px);
+        }
+
+        .btn-secondary {
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.08);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.16);
+            transform: translateY(-3px);
+        }
+
+        /* 섹션 */
+        section {
+            padding: 90px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 34px;
+            margin-bottom: 12px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #9ca8a0;
+            margin-bottom: 45px;
+        }
+
+        /* 서버 특징 */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .info-card {
+            padding: 30px;
+            background: #17232d;
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 14px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .info-card:hover {
+            transform: translateY(-7px);
+            border-color: #65d36e;
+        }
+
+        .icon {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .info-card h3 {
+            color: #65d36e;
+            margin-bottom: 10px;
+        }
+
+        .info-card p {
+            color: #b8c2bb;
+            font-size: 14px;
+        }
+
+        /* 접속 방법 */
+        .how-to {
+            background: #111b24;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .step {
+            padding: 30px;
+            background: #192832;
+            border-radius: 14px;
+            text-align: center;
+        }
+
+        .step-number {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 18px;
+            background: #65d36e;
+            color: #081009;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .step h3 {
+            margin-bottom: 10px;
+        }
+
+        .step p {
+            color: #b8c2bb;
+            font-size: 14px;
+        }
+
+        /* 서버 정보 */
+        .server-box {
+            max-width: 760px;
+            margin: auto;
+            padding: 30px;
+            background: #17232d;
+            border: 1px solid rgba(101,211,110,0.25);
+            border-radius: 16px;
+        }
+
+        .server-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 17px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .server-row:last-child {
+            border-bottom: none;
+        }
+
+        .server-row strong {
+            color: #aebbb2;
+        }
+
+        .server-row span {
+            color: #65d36e;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        /* 공지 */
+        .notice-list {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .notice {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 20px;
+            margin-bottom: 12px;
+            background: #17232d;
+            border-left: 4px solid #65d36e;
+            border-radius: 8px;
+        }
+
+        .notice-title {
+            font-weight: bold;
+        }
+
+        .notice-date {
+            color: #8b9990;
+            white-space: nowrap;
+            font-size: 13px;
+        }
+
+        /* 푸터 */
+        footer {
+            padding: 45px 20px;
+            text-align: center;
+            background: #080d12;
+            color: #8c9890;
+        }
+
+        footer h3 {
+            color: #65d36e;
+            margin-bottom: 10px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .social-links a {
+            color: #b9c5bc;
+            transition: 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #65d36e;
+        }
+
+        .copyright {
+            font-size: 13px;
+        }
+
+        /* 모바일 */
+        @media (max-width: 768px) {
+            nav {
+                height: 60px;
+            }
+
+            .logo {
+                font-size: 15px;
+            }
+
+            .menu {
+                gap: 10px;
+            }
+
+            .menu a {
+                font-size: 11px;
+            }
+
+            .hero h1 {
+                font-size: 42px;
+            }
+
+            .hero p {
+                font-size: 15px;
+            }
+
+            .server-address {
+                font-size: 14px;
+            }
+
+            section {
+                padding: 65px 0;
+            }
+
+            .section-title {
+                font-size: 27px;
+            }
+
+            .info-grid,
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+            .server-box {
+                padding: 20px;
+            }
+
+            .server-row {
+                font-size: 14px;
+            }
+
+            .notice {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 헤더 -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#home" class="logo">SIJI MINECRAFT</a>
+
+                <ul class="menu">
+                    <li><a href="#server">서버 소개</a></li>
+                    <li><a href="#join">접속 방법</a></li>
+                    <li><a href="#notice">공지사항</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+
+    <!-- 메인 -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+
+            <div class="badge">시지중학교 비공식 마인크래프트 서버</div>
+
+            <h1>
+                함께 만드는<br>
+                <span>우리들의 마인크래프트</span>
+            </h1>
+
+            <p>
+                친구들과 함께 건축하고, 모험하고, 새로운 추억을 만들어 보세요.
+            </p>
+
+            <div class="server-address">
+                sijiminecraft.m-c.kr
+            </div>
+
+            <div class="buttons">
+                <a href="#join" class="btn btn-primary">서버 접속하기</a>
+
+                <a
+                    href="https://www.instagram.com/sijiminecraft.m_c.kr/"
+                    target="_blank"
+                    class="btn btn-secondary">
+                    서버 인스타그램
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- 서버 소개 -->
+    <section id="server">
+        <div class="container">
+
+            <h2 class="section-title">서버 소개</h2>
+            <p class="section-subtitle">
+                시지중학교 학생들을 위한 비공식 마인크래프트 커뮤니티 서버입니다.
+            </p>
+
+            <div class="info-grid">
+
+                <div class="info-card">
+                    <div class="icon">🌍</div>
+                    <h3>자유로운 생존</h3>
+                    <p>
+                        친구들과 함께 집을 짓고 자원을 모으며
+                        나만의 마을을 만들어 보세요.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <div class="icon">👥</div>
+                    <h3>친구들과 함께</h3>
+                    <p>
+                        학교 친구들과 소통하며 협동하고
+                        재미있는 서버 생활을 즐길 수 있습니다.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <div class="icon">⚔️</div>
+                    <h3>다양한 콘텐츠</h3>
+                    <p>
+                        건축, 탐험, 미니게임 등 다양한 활동을
+                        자유롭게 즐길 수 있습니다.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- 접속 방법 -->
+    <section class="how-to" id="join">
+        <div class="container">
+
+            <h2 class="section-title">서버 접속 방법</h2>
+            <p class="section-subtitle">
+                아래 세 단계만 따라 하면 서버에 접속할 수 있습니다.
+            </p>
+
+            <div class="steps">
+
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>마인크래프트 실행</h3>
+                    <p>
+                        Java Edition 마인크래프트를 실행합니다.
+                    </p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>멀티플레이 접속</h3>
+                    <p>
+                        멀티플레이에서 서버 추가 버튼을 선택합니다.
+                    </p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>주소 입력</h3>
+                    <p>
+                        서버 주소에 sijiminecraft.m-c.kr을 입력합니다.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- 서버 정보 -->
+    <section>
+        <div class="container">
+
+            <h2 class="section-title">서버 정보</h2>
+            <p class="section-subtitle">
+                현재 서버 접속에 필요한 기본 정보입니다.
+            </p>
+
+            <div class="server-box">
+
+                <div class="server-row">
+                    <strong>서버 주소</strong>
+                    <span>sijiminecraft.m-c.kr</span>
+                </div>
+
+                <div class="server-row">
+                    <strong>게임 버전</strong>
+                    <span>Java Edition 26.2</span>
+                </div>
+
+                <div class="server-row">
+                    <strong>서버 종류</strong>
+                    <span>비공식 학교 커뮤니티 서버</span>
+                </div>
+
+                <div class="server-row">
+                    <strong>권장 플레이</strong>
+                    <span>친구들과 함께 즐기기</span>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- 공지사항 -->
+    <section id="notice" class="how-to">
+        <div class="container">
+
+            <h2 class="section-title">공지사항</h2>
+            <p class="section-subtitle">
+                서버 운영과 관련된 안내사항입니다.
+            </p>
+
+            <div class="notice-list">
+
+                <div class="notice">
+                    <div class="notice-title">
+                        서버 이용 시 다른 플레이어를 배려해 주세요.
+                    </div>
+                    <div class="notice-date">공지</div>
+                </div>
+
+                <div class="notice">
+                    <div class="notice-title">
+                        서버 주소는 sijiminecraft.m-c.kr입니다.
+                    </div>
+                    <div class="notice-date">서버 안내</div>
+                </div>
+
+                <div class="notice">
+                    <div class="notice-title">
+                        서버 관련 문의 및 소식은 인스타그램을 확인해 주세요.
+                    </div>
+                    <div class="notice-date">안내</div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- 푸터 -->
+    <footer>
+        <h3>SIJI MINECRAFT</h3>
+
+        <p>
+            시지중학교 비공식 마인크래프트 서버
+        </p>
+
+        <div class="social-links">
+
+            <a
+                href="https://www.instagram.com/sijiminecraft.m_c.kr/"
+                target="_blank">
+                서버 인스타그램
+            </a>
+
+            <a
+                href="https://www.instagram.com/y2._uin"
+                target="_blank">
+                운영자 인스타그램
+            </a>
+
+        </div>
+
+        <p class="copyright">
+            © 2026 Siji Minecraft. Unofficial community server.
+        </p>
+    </footer>
+
+
+    <script>
+        // 서버 주소 클릭 시 클립보드 복사
+        const address = document.querySelector(".server-address");
+
+        address.style.cursor = "pointer";
+
+        address.title = "클릭하면 서버 주소가 복사됩니다.";
+
+        address.addEventListener("click", async function () {
+            const text = "sijiminecraft.m-c.kr";
+
+            try {
+                await navigator.clipboard.writeText(text);
+                const original = address.textContent;
+                address.textContent = "복사 완료!";
+
+                setTimeout(() => {
+                    address.textContent = original;
+                }, 1500);
+            } catch (error) {
+                alert("서버 주소: " + text);
+            }
+        });
+    </script>
+
+</body>
+</html>
