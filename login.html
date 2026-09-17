@@ -2,10 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>로그인 - 시지중 마인크래프트</title>
 
@@ -19,8 +16,11 @@
 html,
 body {
     margin: 0;
-    width: 100%;
     min-height: 100%;
+}
+
+html {
+    background: #080c10;
 }
 
 body {
@@ -38,15 +38,19 @@ body {
 
     color: white;
 
-    background:
+    background-color: #080c10;
+
+    background-image:
         linear-gradient(
-            rgba(4, 8, 12, .30),
-            rgba(4, 8, 12, .54)
+            rgba(4,8,12,.30),
+            rgba(4,8,12,.55)
         ),
-        url("./minecraft.png")
-        center center /
-        cover
-        fixed;
+        url("./minecraft.png");
+
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 
@@ -71,28 +75,13 @@ body {
 
     padding: 39px 40px 31px;
 
-    background: rgba(29, 31, 34, .96);
-
     border-radius: 14px;
+
+    background: rgba(29,31,34,.97);
 
     box-shadow:
         0 25px 70px rgba(0,0,0,.48),
         0 0 0 1px rgba(255,255,255,.035);
-
-    animation: show .25s ease;
-}
-
-@keyframes show {
-
-    from {
-        opacity: 0;
-        transform: translateY(8px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 
@@ -103,14 +92,14 @@ body {
 .brand {
     text-align: center;
 
-    margin-bottom: 31px;
+    margin-bottom: 30px;
 }
 
 .brand-mark {
     width: 44px;
     height: 44px;
 
-    margin: 0 auto 17px;
+    margin: 0 auto 16px;
 
     display: flex;
     align-items: center;
@@ -118,19 +107,15 @@ body {
 
     border-radius: 11px;
 
-    background: #267dd0;
-
+    background: #287dc8;
     color: white;
 
-    font-size: 22px;
+    font-size: 21px;
     font-weight: 900;
-
-    box-shadow:
-        0 7px 25px rgba(38,125,208,.28);
 }
 
 .brand-name {
-    margin-bottom: 24px;
+    margin-bottom: 23px;
 
     color: #dce8f3;
 
@@ -160,6 +145,7 @@ body {
 
 .tabs {
     display: grid;
+
     grid-template-columns: 1fr 1fr;
 
     gap: 6px;
@@ -170,30 +156,26 @@ body {
 .tab {
     height: 42px;
 
-    border:
-        1px solid
-        rgba(255,255,255,.12);
-
+    border: 1px solid rgba(255,255,255,.12);
     border-radius: 5px;
 
     background: transparent;
-
     color: #aeb5bc;
 
     font-size: 13px;
 }
 
 .tab.active {
-    color: white;
-
     background: #246cae;
 
     border-color: #388edc;
+
+    color: white;
 }
 
 
 /* =========================
-   INPUT
+   FIELD
 ========================= */
 
 .field {
@@ -228,10 +210,6 @@ body {
     color: white;
 
     font-size: 14px;
-
-    transition:
-        border-color .15s ease,
-        box-shadow .15s ease;
 }
 
 .field-input::placeholder {
@@ -265,17 +243,11 @@ body {
     font-size: 14px;
     font-weight: 700;
 
-    transition:
-        background .15s ease,
-        transform .1s ease;
+    transition: background .15s ease;
 }
 
 .submit:hover {
     background: #2d82cb;
-}
-
-.submit:active {
-    transform: translateY(1px);
 }
 
 .submit:disabled {
@@ -325,7 +297,6 @@ body {
 
 .bottom a {
     color: #9da7b0;
-
     font-size: 12px;
 }
 
@@ -398,13 +369,16 @@ body {
             <button
                 id="loginTab"
                 class="tab active"
+                type="button"
             >
                 로그인
             </button>
 
+
             <button
                 id="signupTab"
                 class="tab"
+                type="button"
             >
                 회원가입
             </button>
@@ -416,7 +390,10 @@ body {
 
             <div class="field">
 
-                <label class="field-label">
+                <label
+                    class="field-label"
+                    for="email"
+                >
                     이메일
                 </label>
 
@@ -434,7 +411,10 @@ body {
 
             <div class="field">
 
-                <label class="field-label">
+                <label
+                    class="field-label"
+                    for="password"
+                >
                     비밀번호
                 </label>
 
@@ -488,9 +468,9 @@ body {
 
 <script>
 
-/* =========================================================
+/* =====================================================
    SUPABASE
-========================================================= */
+===================================================== */
 
 const SUPABASE_URL =
     "https://gpmnozujzhebnkpnrfik.supabase.co";
@@ -498,16 +478,24 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
     "sb_publishable_Df6zehKD_EARd9VnjMmtZw_GXvjE0uA";
 
-const supabase =
+
+const client =
     window.supabase.createClient(
         SUPABASE_URL,
-        SUPABASE_KEY
+        SUPABASE_KEY,
+        {
+            auth: {
+                persistSession: true,
+                autoRefreshToken: true,
+                detectSessionInUrl: true
+            }
+        }
     );
 
 
-/* =========================================================
+/* =====================================================
    DOM
-========================================================= */
+===================================================== */
 
 const authForm =
     document.getElementById("authForm");
@@ -540,62 +528,110 @@ const pageDescription =
 let mode = "login";
 
 
-/* =========================================================
+/* =====================================================
+   GITHUB PAGES SAFE REDIRECT
+===================================================== */
+
+function goToHome() {
+
+    /*
+       현재 페이지 주소를 기준으로
+       같은 폴더의 index.html 주소를 만든다.
+
+       예:
+       /siji-uno-minecraft/login.html
+       →
+       /siji-uno-minecraft/index.html
+    */
+
+    const homeUrl =
+        new URL(
+            "./index.html",
+            window.location.href
+        ).href;
+
+
+    window.location.replace(
+        homeUrl
+    );
+}
+
+
+/* =====================================================
    MESSAGE
-========================================================= */
+===================================================== */
 
 function setMessage(
     text,
     type = "error"
 ) {
 
-    message.textContent = text;
+    message.textContent =
+        text;
 
     message.className =
         "message " + type;
 }
 
 
-/* =========================================================
+/* =====================================================
    MODE
-========================================================= */
+===================================================== */
 
 function setMode(newMode) {
 
     mode = newMode;
 
-    setMessage("");
 
     if (mode === "login") {
 
-        loginTab.classList.add("active");
-        signupTab.classList.remove("active");
+        loginTab.classList.add(
+            "active"
+        );
+
+        signupTab.classList.remove(
+            "active"
+        );
+
 
         pageTitle.textContent =
             "로그인";
+
 
         pageDescription.textContent =
             "시지중 마인크래프트 서버 이용";
 
+
         submitBtn.textContent =
             "로그인";
+
 
         passwordInput.autocomplete =
             "current-password";
 
+
     } else {
 
-        loginTab.classList.remove("active");
-        signupTab.classList.add("active");
+        loginTab.classList.remove(
+            "active"
+        );
+
+        signupTab.classList.add(
+            "active"
+        );
+
 
         pageTitle.textContent =
             "회원가입";
 
+
         pageDescription.textContent =
             "시지중 마인크래프트 서버 계정 만들기";
 
+
         submitBtn.textContent =
             "회원가입";
+
 
         passwordInput.autocomplete =
             "new-password";
@@ -603,20 +639,35 @@ function setMode(newMode) {
 }
 
 
+/* =====================================================
+   TABS
+===================================================== */
+
 loginTab.addEventListener(
     "click",
-    () => setMode("login")
+    function() {
+
+        setMode("login");
+        setMessage("");
+
+    }
 );
+
 
 signupTab.addEventListener(
     "click",
-    () => setMode("signup")
+    function() {
+
+        setMode("signup");
+        setMessage("");
+
+    }
 );
 
 
-/* =========================================================
-   AUTH
-========================================================= */
+/* =====================================================
+   LOGIN / SIGNUP
+===================================================== */
 
 authForm.addEventListener(
     "submit",
@@ -632,7 +683,10 @@ authForm.addEventListener(
             passwordInput.value;
 
 
-        if (!email || !password) {
+        if (
+            !email ||
+            !password
+        ) {
 
             setMessage(
                 "이메일과 비밀번호를 입력해주세요."
@@ -644,6 +698,7 @@ authForm.addEventListener(
 
         submitBtn.disabled = true;
 
+
         setMessage(
             "처리 중입니다...",
             "success"
@@ -652,13 +707,17 @@ authForm.addEventListener(
 
         try {
 
+            /* =========================================
+               LOGIN
+            ========================================= */
+
             if (mode === "login") {
 
                 const {
                     data,
                     error
                 } =
-                    await supabase.auth
+                    await client.auth
                         .signInWithPassword({
                             email,
                             password
@@ -670,74 +729,128 @@ authForm.addEventListener(
                 }
 
 
+                /*
+                   로그인 성공 후 실제 세션이
+                   저장됐는지 한 번 더 확인
+                */
+
+                const {
+                    data: sessionData,
+                    error: sessionError
+                } =
+                    await client.auth
+                        .getSession();
+
+
+                if (sessionError) {
+                    throw sessionError;
+                }
+
+
+                if (
+                    !sessionData.session?.user
+                ) {
+
+                    throw new Error(
+                        "로그인은 되었지만 세션을 확인하지 못했습니다."
+                    );
+                }
+
+
                 setMessage(
-                    "로그인되었습니다.",
+                    "로그인되었습니다. 이동 중...",
+                    "success"
+                );
+
+
+                /*
+                   아주 짧게 화면에 성공 메시지를
+                   보여준 뒤 실제 주소로 이동
+                */
+
+                setTimeout(
+                    goToHome,
+                    250
+                );
+
+
+                return;
+            }
+
+
+            /* =========================================
+               SIGNUP
+            ========================================= */
+
+            const {
+                data,
+                error
+            } =
+                await client.auth
+                    .signUp({
+                        email,
+                        password
+                    });
+
+
+            if (error) {
+                throw error;
+            }
+
+
+            /*
+               이메일 확인을 켜지 않은 Supabase에서는
+               가입 직후 session이 존재할 수 있음.
+            */
+
+            if (data.session?.user) {
+
+                setMessage(
+                    "회원가입 및 로그인이 완료되었습니다. 이동 중...",
                     "success"
                 );
 
 
                 setTimeout(
-                    function() {
-
-                        window.location.href =
-                            "./index.html";
-
-                    },
-                    500
+                    goToHome,
+                    250
                 );
 
 
-            } else {
-
-                const {
-                    data,
-                    error
-                } =
-                    await supabase.auth
-                        .signUp({
-                            email,
-                            password
-                        });
-
-
-                if (error) {
-                    throw error;
-                }
-
-
-                /*
-                   Supabase 설정에 따라
-                   이메일 확인이 켜져 있으면
-                   가입 후 이메일 인증이 필요함.
-                */
-
-                setMessage(
-                    "회원가입이 완료되었습니다. 이메일 인증이 필요하면 메일을 확인해주세요.",
-                    "success"
-                );
-
-
-                emailInput.value =
-                    email;
-
-                passwordInput.value =
-                    "";
-
-                setMode("login");
-
+                return;
             }
+
+
+            /*
+               이메일 확인이 켜진 경우
+            */
+
+            setMode("login");
+
+
+            emailInput.value =
+                email;
+
+            passwordInput.value =
+                "";
+
+
+            setMessage(
+                "회원가입이 완료되었습니다. 이메일 인증 후 로그인해주세요.",
+                "success"
+            );
 
 
         } catch (error) {
 
             console.error(
-                "인증 오류:",
+                "AUTH ERROR:",
                 error
             );
 
 
             const msg =
-                error.message || "";
+                error?.message || "";
 
 
             if (
@@ -750,15 +863,18 @@ authForm.addEventListener(
                     "이메일 또는 비밀번호가 올바르지 않습니다."
                 );
 
+
             } else if (
-                msg.toLowerCase().includes(
-                    "already registered"
-                )
+                msg.toLowerCase()
+                    .includes(
+                        "already registered"
+                    )
             ) {
 
                 setMessage(
                     "이미 가입된 이메일입니다."
                 );
+
 
             } else if (
                 msg.includes(
@@ -770,56 +886,108 @@ authForm.addEventListener(
                     "비밀번호는 최소 6자 이상이어야 합니다."
                 );
 
+
             } else {
 
                 setMessage(
                     msg ||
-                    "처리 중 오류가 발생했습니다."
+                    "로그인 처리 중 오류가 발생했습니다."
                 );
             }
 
+
         } finally {
 
-            submitBtn.disabled = false;
+            submitBtn.disabled =
+                false;
         }
 
     }
 );
 
 
-/* =========================================================
-   ALREADY LOGGED IN
-========================================================= */
+/* =====================================================
+   CHECK EXISTING SESSION
+===================================================== */
 
-async function checkSession() {
+async function checkExistingSession() {
 
-    const {
-        data,
-        error
-    } =
-        await supabase.auth.getSession();
+    try {
+
+        const {
+            data,
+            error
+        } =
+            await client.auth.getSession();
 
 
-    if (error) {
+        if (error) {
+
+            console.error(
+                "세션 확인 실패:",
+                error
+            );
+
+            return;
+        }
+
+
+        if (
+            data.session?.user
+        ) {
+
+            goToHome();
+        }
+
+
+    } catch (error) {
 
         console.error(
-            "세션 확인 실패:",
+            "세션 확인 오류:",
             error
         );
-
-        return;
-    }
-
-
-    if (data.session?.user) {
-
-        window.location.href =
-            "./index.html";
     }
 }
 
 
-checkSession();
+/* =====================================================
+   AUTH STATE
+===================================================== */
+
+client.auth.onAuthStateChange(
+    function(event, session) {
+
+        if (
+            event === "SIGNED_IN" &&
+            session?.user
+        ) {
+
+            /*
+               폼 submit에서 이미 이동시키므로
+               여기서는 보조적으로만 처리
+            */
+
+            if (
+                window.location.pathname
+                    .endsWith("login.html")
+            ) {
+
+                setTimeout(
+                    goToHome,
+                    300
+                );
+            }
+        }
+
+    }
+);
+
+
+/* =====================================================
+   START
+===================================================== */
+
+checkExistingSession();
 
 </script>
 
