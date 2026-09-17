@@ -2,7 +2,10 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
 <title>로그인 - 시지중 마인크래프트</title>
 
@@ -27,283 +30,337 @@ body {
     align-items: center;
     justify-content: center;
 
-    font-family: Arial, "Noto Sans KR", sans-serif;
+    font-family:
+        Arial,
+        "Noto Sans KR",
+        "Malgun Gothic",
+        sans-serif;
+
     color: white;
 
     background:
         linear-gradient(
-            rgba(0, 0, 0, 0.28),
-            rgba(0, 0, 0, 0.45)
+            rgba(4, 8, 12, .30),
+            rgba(4, 8, 12, .54)
         ),
-        url("./minecraft.png") center center / cover fixed;
+        url("./minecraft.png")
+        center center /
+        cover
+        fixed;
 }
 
 
-/* LOGIN WRAPPER */
+/* =========================
+   WRAPPER
+========================= */
 
-.login-wrapper {
+.login-wrap {
     width: 100%;
-    max-width: 460px;
-    padding: 24px;
+    max-width: 450px;
+
+    padding: 20px;
 }
 
 
-/* LOGIN CARD */
+/* =========================
+   CARD
+========================= */
 
 .login-card {
     width: 100%;
 
-    padding: 40px 42px 34px;
+    padding: 39px 40px 31px;
 
-    border-radius: 16px;
+    background: rgba(29, 31, 34, .96);
 
-    background: rgba(38, 38, 38, 0.96);
+    border-radius: 14px;
 
     box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.48),
-        0 0 0 1px rgba(255, 255, 255, 0.04);
+        0 25px 70px rgba(0,0,0,.48),
+        0 0 0 1px rgba(255,255,255,.035);
 
-    animation: appear 0.35s ease;
+    animation: show .25s ease;
 }
 
-@keyframes appear {
+@keyframes show {
 
     from {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(8px);
     }
 
     to {
         opacity: 1;
         transform: translateY(0);
     }
-
 }
 
 
-/* BRAND */
+/* =========================
+   BRAND
+========================= */
 
 .brand {
     text-align: center;
-    margin-bottom: 28px;
+
+    margin-bottom: 31px;
 }
 
-.brand-logo {
-    display: inline-flex;
+.brand-mark {
+    width: 44px;
+    height: 44px;
+
+    margin: 0 auto 17px;
+
+    display: flex;
     align-items: center;
-    gap: 8px;
+    justify-content: center;
 
-    margin-bottom: 26px;
+    border-radius: 11px;
 
-    font-size: 21px;
+    background: #267dd0;
+
+    color: white;
+
+    font-size: 22px;
+    font-weight: 900;
+
+    box-shadow:
+        0 7px 25px rgba(38,125,208,.28);
+}
+
+.brand-name {
+    margin-bottom: 24px;
+
+    color: #dce8f3;
+
+    font-size: 15px;
     font-weight: 600;
-}
-
-.brand-symbol {
-    display: grid;
-
-    grid-template-columns: repeat(2, 13px);
-    grid-template-rows: repeat(2, 13px);
-
-    gap: 2px;
-}
-
-.brand-symbol span:nth-child(1) {
-    background: #f25022;
-}
-
-.brand-symbol span:nth-child(2) {
-    background: #7fba00;
-}
-
-.brand-symbol span:nth-child(3) {
-    background: #00a4ef;
-}
-
-.brand-symbol span:nth-child(4) {
-    background: #ffb900;
 }
 
 .brand h1 {
     margin: 0;
 
-    font-size: 30px;
-    font-weight: 600;
+    font-size: 29px;
     letter-spacing: -1px;
 }
 
 .brand p {
-    margin: 14px 0 0;
+    margin: 12px 0 0;
 
-    color: #bdbdbd;
-    font-size: 14px;
+    color: #a8afb6;
+
+    font-size: 13px;
 }
 
 
-/* TABS */
+/* =========================
+   TABS
+========================= */
 
-.auth-tabs {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 22px;
+.tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 6px;
+
+    margin-bottom: 21px;
 }
 
-.auth-tab {
-    flex: 1;
-
+.tab {
     height: 42px;
 
-    border: 1px solid #555;
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
     border-radius: 5px;
 
     background: transparent;
-    color: #bdbdbd;
 
-    cursor: pointer;
+    color: #aeb5bc;
+
+    font-size: 13px;
 }
 
-.auth-tab.active {
-    background: #3e862d;
-    border-color: #6bbf45;
+.tab.active {
     color: white;
+
+    background: #246cae;
+
+    border-color: #388edc;
 }
 
 
-/* INPUT */
+/* =========================
+   INPUT
+========================= */
 
-.input-group {
-    margin-bottom: 16px;
+.field {
+    margin-bottom: 15px;
 }
 
-.input-label {
+.field-label {
     display: block;
+
     margin-bottom: 7px;
 
-    color: #bdbdbd;
-    font-size: 12px;
+    color: #b6bec6;
+
+    font-size: 11px;
 }
 
-input {
+.field-input {
     width: 100%;
     height: 48px;
 
     padding: 0 13px;
 
-    border: 1px solid #666;
+    border:
+        1px solid
+        rgba(255,255,255,.27);
+
     border-radius: 4px;
 
-    background: #2b2b2b;
+    outline: none;
+
+    background: #292b2e;
     color: white;
 
-    outline: none;
-    font-size: 15px;
+    font-size: 14px;
+
+    transition:
+        border-color .15s ease,
+        box-shadow .15s ease;
 }
 
-input:focus {
-    border-color: #73c950;
-    box-shadow: 0 0 0 1px #73c950;
+.field-input::placeholder {
+    color: #777f87;
 }
 
-input::placeholder {
-    color: #888;
+.field-input:focus {
+    border-color: #5eabec;
+
+    box-shadow:
+        0 0 0 1px #5eabec;
 }
 
 
-/* BUTTON */
+/* =========================
+   SUBMIT
+========================= */
 
-.submit-btn {
+.submit {
     width: 100%;
     height: 48px;
 
     margin-top: 5px;
 
-    border: none;
+    border: 0;
     border-radius: 4px;
 
-    background: #498f32;
+    background: #246cae;
     color: white;
 
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 14px;
+    font-weight: 700;
 
-    cursor: pointer;
+    transition:
+        background .15s ease,
+        transform .1s ease;
 }
 
-.submit-btn:hover {
-    background: #57a53c;
+.submit:hover {
+    background: #2d82cb;
 }
 
-.submit-btn:disabled {
-    opacity: 0.6;
+.submit:active {
+    transform: translateY(1px);
+}
+
+.submit:disabled {
+    opacity: .55;
     cursor: wait;
 }
 
 
-/* MESSAGE */
+/* =========================
+   MESSAGE
+========================= */
 
 .message {
-    min-height: 22px;
-    margin-top: 16px;
+    min-height: 21px;
+
+    margin-top: 14px;
 
     text-align: center;
 
-    font-size: 13px;
-    line-height: 1.5;
+    font-size: 12px;
+    line-height: 1.6;
 }
 
 .message.error {
-    color: #ff9999;
+    color: #ff9a9a;
 }
 
 .message.success {
-    color: #82d766;
+    color: #7fd0ff;
 }
 
 
-/* LINKS */
+/* =========================
+   BOTTOM
+========================= */
 
-.bottom-links {
-    margin-top: 25px;
-    padding-top: 20px;
+.bottom {
+    margin-top: 23px;
+    padding-top: 18px;
 
-    border-top: 1px solid #444;
+    border-top:
+        1px solid
+        rgba(255,255,255,.09);
 
     text-align: center;
 }
 
-.bottom-links a {
-    color: #aaa;
-    font-size: 13px;
-}
+.bottom a {
+    color: #9da7b0;
 
-.bottom-links a:hover {
-    color: white;
-}
-
-.footer-note {
-    margin-top: 22px;
-
-    text-align: center;
-
-    color: rgba(255,255,255,.72);
     font-size: 12px;
 }
 
+.bottom a:hover {
+    color: #69b6ff;
+}
+
+.page-note {
+    margin-top: 17px;
+
+    text-align: center;
+
+    color: rgba(255,255,255,.68);
+
+    font-size: 11px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
 
 @media (max-width: 500px) {
 
-    .login-wrapper {
-        padding: 14px;
+    .login-wrap {
+        padding: 13px;
     }
 
     .login-card {
-        padding: 30px 25px;
+        padding: 31px 24px 27px;
     }
 
     .brand h1 {
         font-size: 26px;
     }
-
 }
 </style>
 </head>
@@ -311,25 +368,19 @@ input::placeholder {
 
 <body>
 
-<div class="login-wrapper">
+<div class="login-wrap">
 
     <div class="login-card">
 
         <div class="brand">
 
-            <div class="brand-logo">
-
-                <div class="brand-symbol">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-
-                <span>시지중 마인크래프트</span>
-
+            <div class="brand-mark">
+                ◆
             </div>
 
+            <div class="brand-name">
+                시지중 마인크래프트
+            </div>
 
             <h1 id="pageTitle">
                 로그인
@@ -342,13 +393,19 @@ input::placeholder {
         </div>
 
 
-        <div class="auth-tabs">
+        <div class="tabs">
 
-            <button id="loginTab" class="auth-tab active">
+            <button
+                id="loginTab"
+                class="tab active"
+            >
                 로그인
             </button>
 
-            <button id="signupTab" class="auth-tab">
+            <button
+                id="signupTab"
+                class="tab"
+            >
                 회원가입
             </button>
 
@@ -357,14 +414,15 @@ input::placeholder {
 
         <form id="authForm">
 
-            <div class="input-group">
+            <div class="field">
 
-                <label class="input-label">
+                <label class="field-label">
                     이메일
                 </label>
 
                 <input
                     id="email"
+                    class="field-input"
                     type="email"
                     placeholder="이메일을 입력하세요"
                     autocomplete="email"
@@ -374,14 +432,15 @@ input::placeholder {
             </div>
 
 
-            <div class="input-group">
+            <div class="field">
 
-                <label class="input-label">
+                <label class="field-label">
                     비밀번호
                 </label>
 
                 <input
                     id="password"
+                    class="field-input"
                     type="password"
                     placeholder="비밀번호를 입력하세요"
                     autocomplete="current-password"
@@ -394,7 +453,7 @@ input::placeholder {
 
             <button
                 id="submitBtn"
-                class="submit-btn"
+                class="submit"
                 type="submit"
             >
                 로그인
@@ -403,10 +462,13 @@ input::placeholder {
         </form>
 
 
-        <div id="message" class="message"></div>
+        <div
+            id="message"
+            class="message"
+        ></div>
 
 
-        <div class="bottom-links">
+        <div class="bottom">
 
             <a href="./index.html">
                 ← 메인 페이지로 돌아가기
@@ -417,7 +479,7 @@ input::placeholder {
     </div>
 
 
-    <div class="footer-note">
+    <div class="page-note">
         시지중학교 비공식 마인크래프트 서버
     </div>
 
@@ -426,9 +488,9 @@ input::placeholder {
 
 <script>
 
-/* =====================================================
+/* =========================================================
    SUPABASE
-===================================================== */
+========================================================= */
 
 const SUPABASE_URL =
     "https://gpmnozujzhebnkpnrfik.supabase.co";
@@ -436,240 +498,328 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
     "sb_publishable_Df6zehKD_EARd9VnjMmtZw_GXvjE0uA";
 
-const db = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
+const supabase =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
 
-/* =====================================================
+/* =========================================================
    DOM
-===================================================== */
+========================================================= */
 
-const authForm = document.getElementById("authForm");
+const authForm =
+    document.getElementById("authForm");
 
-const emailInput = document.getElementById("email");
-const passwordInput = document.getElementById("password");
+const emailInput =
+    document.getElementById("email");
 
-const loginTab = document.getElementById("loginTab");
-const signupTab = document.getElementById("signupTab");
+const passwordInput =
+    document.getElementById("password");
 
-const submitBtn = document.getElementById("submitBtn");
+const loginTab =
+    document.getElementById("loginTab");
 
-const message = document.getElementById("message");
+const signupTab =
+    document.getElementById("signupTab");
 
-const pageTitle = document.getElementById("pageTitle");
-const pageDescription = document.getElementById("pageDescription");
+const submitBtn =
+    document.getElementById("submitBtn");
+
+const message =
+    document.getElementById("message");
+
+const pageTitle =
+    document.getElementById("pageTitle");
+
+const pageDescription =
+    document.getElementById("pageDescription");
 
 
-let authMode = "login";
+let mode = "login";
 
 
-/* =====================================================
-   메시지
-===================================================== */
+/* =========================================================
+   MESSAGE
+========================================================= */
 
-function showMessage(text, type = "error") {
+function setMessage(
+    text,
+    type = "error"
+) {
 
     message.textContent = text;
-    message.className = "message " + type;
 
+    message.className =
+        "message " + type;
 }
 
 
-/* =====================================================
-   로그인 / 회원가입 모드
-===================================================== */
+/* =========================================================
+   MODE
+========================================================= */
 
-function setAuthMode(mode) {
+function setMode(newMode) {
 
-    authMode = mode;
-    showMessage("");
+    mode = newMode;
+
+    setMessage("");
 
     if (mode === "login") {
 
         loginTab.classList.add("active");
         signupTab.classList.remove("active");
 
-        pageTitle.textContent = "로그인";
+        pageTitle.textContent =
+            "로그인";
 
         pageDescription.textContent =
             "시지중 마인크래프트 서버 이용";
 
-        submitBtn.textContent = "로그인";
+        submitBtn.textContent =
+            "로그인";
 
-        passwordInput.autocomplete = "current-password";
+        passwordInput.autocomplete =
+            "current-password";
 
     } else {
 
         loginTab.classList.remove("active");
         signupTab.classList.add("active");
 
-        pageTitle.textContent = "회원가입";
+        pageTitle.textContent =
+            "회원가입";
 
         pageDescription.textContent =
             "시지중 마인크래프트 서버 계정 만들기";
 
-        submitBtn.textContent = "회원가입";
+        submitBtn.textContent =
+            "회원가입";
 
-        passwordInput.autocomplete = "new-password";
+        passwordInput.autocomplete =
+            "new-password";
     }
-
 }
 
 
-loginTab.addEventListener("click", function() {
-    setAuthMode("login");
-});
+loginTab.addEventListener(
+    "click",
+    () => setMode("login")
+);
+
+signupTab.addEventListener(
+    "click",
+    () => setMode("signup")
+);
 
 
-signupTab.addEventListener("click", function() {
-    setAuthMode("signup");
-});
+/* =========================================================
+   AUTH
+========================================================= */
+
+authForm.addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
 
 
-/* =====================================================
-   로그인 / 회원가입
-===================================================== */
+        const email =
+            emailInput.value.trim();
 
-authForm.addEventListener("submit", async function(event) {
-
-    event.preventDefault();
-
-    const email = emailInput.value.trim();
-    const password = passwordInput.value;
+        const password =
+            passwordInput.value;
 
 
-    if (!email || !password) {
+        if (!email || !password) {
 
-        showMessage("이메일과 비밀번호를 입력해주세요.");
+            setMessage(
+                "이메일과 비밀번호를 입력해주세요."
+            );
+
+            return;
+        }
+
+
+        submitBtn.disabled = true;
+
+        setMessage(
+            "처리 중입니다...",
+            "success"
+        );
+
+
+        try {
+
+            if (mode === "login") {
+
+                const {
+                    data,
+                    error
+                } =
+                    await supabase.auth
+                        .signInWithPassword({
+                            email,
+                            password
+                        });
+
+
+                if (error) {
+                    throw error;
+                }
+
+
+                setMessage(
+                    "로그인되었습니다.",
+                    "success"
+                );
+
+
+                setTimeout(
+                    function() {
+
+                        window.location.href =
+                            "./index.html";
+
+                    },
+                    500
+                );
+
+
+            } else {
+
+                const {
+                    data,
+                    error
+                } =
+                    await supabase.auth
+                        .signUp({
+                            email,
+                            password
+                        });
+
+
+                if (error) {
+                    throw error;
+                }
+
+
+                /*
+                   Supabase 설정에 따라
+                   이메일 확인이 켜져 있으면
+                   가입 후 이메일 인증이 필요함.
+                */
+
+                setMessage(
+                    "회원가입이 완료되었습니다. 이메일 인증이 필요하면 메일을 확인해주세요.",
+                    "success"
+                );
+
+
+                emailInput.value =
+                    email;
+
+                passwordInput.value =
+                    "";
+
+                setMode("login");
+
+            }
+
+
+        } catch (error) {
+
+            console.error(
+                "인증 오류:",
+                error
+            );
+
+
+            const msg =
+                error.message || "";
+
+
+            if (
+                msg.includes(
+                    "Invalid login credentials"
+                )
+            ) {
+
+                setMessage(
+                    "이메일 또는 비밀번호가 올바르지 않습니다."
+                );
+
+            } else if (
+                msg.toLowerCase().includes(
+                    "already registered"
+                )
+            ) {
+
+                setMessage(
+                    "이미 가입된 이메일입니다."
+                );
+
+            } else if (
+                msg.includes(
+                    "Password should be at least"
+                )
+            ) {
+
+                setMessage(
+                    "비밀번호는 최소 6자 이상이어야 합니다."
+                );
+
+            } else {
+
+                setMessage(
+                    msg ||
+                    "처리 중 오류가 발생했습니다."
+                );
+            }
+
+        } finally {
+
+            submitBtn.disabled = false;
+        }
+
+    }
+);
+
+
+/* =========================================================
+   ALREADY LOGGED IN
+========================================================= */
+
+async function checkSession() {
+
+    const {
+        data,
+        error
+    } =
+        await supabase.auth.getSession();
+
+
+    if (error) {
+
+        console.error(
+            "세션 확인 실패:",
+            error
+        );
+
         return;
     }
 
 
-    submitBtn.disabled = true;
-    showMessage("처리 중입니다...", "success");
+    if (data.session?.user) {
 
-
-    try {
-
-        if (authMode === "login") {
-
-            const { data, error } =
-                await db.auth.signInWithPassword({
-                    email: email,
-                    password: password
-                });
-
-
-            if (error) {
-                throw error;
-            }
-
-
-            showMessage("로그인되었습니다.", "success");
-
-
-            setTimeout(function() {
-                window.location.href = "./index.html";
-            }, 700);
-
-
-        } else {
-
-            const { data, error } =
-                await db.auth.signUp({
-                    email: email,
-                    password: password
-                });
-
-
-            if (error) {
-                throw error;
-            }
-
-
-            showMessage(
-                "회원가입이 완료되었습니다. 이메일 인증이 필요한 경우 이메일을 확인해주세요.",
-                "success"
-            );
-
-
-            setAuthMode("login");
-
-            emailInput.value = email;
-            passwordInput.value = "";
-
-        }
-
-
-    } catch (error) {
-
-        console.error("인증 오류:", error);
-
-        const errorMessage = error.message || "";
-
-        if (
-            errorMessage.includes("Invalid login credentials")
-        ) {
-
-            showMessage(
-                "이메일 또는 비밀번호가 올바르지 않습니다."
-            );
-
-        } else if (
-            errorMessage.includes("already registered")
-        ) {
-
-            showMessage(
-                "이미 가입된 이메일입니다."
-            );
-
-        } else if (
-            errorMessage.includes("Password should be at least")
-        ) {
-
-            showMessage(
-                "비밀번호는 최소 6자 이상이어야 합니다."
-            );
-
-        } else {
-
-            showMessage(
-                errorMessage || "처리 중 오류가 발생했습니다."
-            );
-        }
-
-    } finally {
-
-        submitBtn.disabled = false;
+        window.location.href =
+            "./index.html";
     }
-
-});
-
-
-/* =====================================================
-   이미 로그인되어 있는지 확인
-===================================================== */
-
-async function checkAlreadyLoggedIn() {
-
-    const {
-        data: {
-            session
-        }
-    } = await db.auth.getSession();
-
-
-    if (session?.user) {
-
-        window.location.href = "./index.html";
-    }
-
 }
 
 
-checkAlreadyLoggedIn();
+checkSession();
 
 </script>
 
