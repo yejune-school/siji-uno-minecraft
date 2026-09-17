@@ -1,485 +1,514 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>시지중 마인크래프트</title>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            margin: 0;
-            color: #e8f0e9;
-            font-family: Arial, "Noto Sans KR", sans-serif;
-            background:
-                linear-gradient(rgba(7, 13, 10, 0.72), rgba(7, 13, 10, 0.88)),
-                url("./minecraft.png") center / cover fixed;
-            min-height: 100vh;
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        button,
-        input,
-        textarea {
-            font: inherit;
-        }
-
-        button {
-            cursor: pointer;
-        }
-
-        .top {
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            background: rgba(8, 15, 11, 0.94);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-        }
-
-        .header {
-            max-width: 1150px;
-            margin: auto;
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .logo {
-            width: 48px;
-            height: 48px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-            color: #061008;
-            background: #45c96a;
-            font-weight: bold;
-        }
-
-        .logo-title {
-            font-size: 22px;
-            font-weight: bold;
-            white-space: nowrap;
-        }
-
-        .user-area {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        #userName {
-            color: #54e878;
-            font-size: 15px;
-        }
-
-        .logout-button {
-            padding: 11px 16px;
-            border-radius: 12px;
-            border: 1px solid #304538;
-            color: white;
-            background: rgba(255,255,255,0.03);
-        }
-
-        .logout-button:hover {
-            background: rgba(255,255,255,0.08);
-        }
-
-        nav {
-            max-width: 1150px;
-            margin: auto;
-            padding: 0 20px 14px;
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-        }
-
-        nav a {
-            color: #aab5ac;
-            font-size: 16px;
-        }
-
-        nav a:hover {
-            color: #65e884;
-        }
-
-        main {
-            max-width: 1150px;
-            margin: auto;
-            padding: 45px 20px 80px;
-        }
-
-        .hero {
-            text-align: center;
-            padding: 35px 10px 45px;
-        }
-
-        .hero h1 {
-            margin: 0 0 14px;
-            font-size: clamp(30px, 6vw, 56px);
-            letter-spacing: -2px;
-        }
-
-        .hero p {
-            color: #b7c2ba;
-            font-size: 17px;
-            margin: 0 auto;
-            line-height: 1.8;
-        }
-
-        .server-card {
-            max-width: 700px;
-            margin: 0 auto 55px;
-            padding: 25px;
-            border: 1px solid rgba(104, 225, 132, 0.3);
-            border-radius: 20px;
-            background: rgba(14, 25, 17, 0.9);
-            box-shadow: 0 15px 50px rgba(0,0,0,0.2);
-        }
-
-        .server-label {
-            color: #92a49a;
-            font-size: 13px;
-            margin-bottom: 10px;
-        }
-
-        .server-address {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .server-address strong {
-            font-size: clamp(18px, 4vw, 26px);
-            color: #67ed86;
-            letter-spacing: 0.5px;
-        }
-
-        .copy-button,
-        .primary-button {
-            border: none;
-            border-radius: 10px;
-            padding: 12px 17px;
-            background: #45c96a;
-            color: #061008;
-            font-weight: bold;
-        }
-
-        .copy-button:hover,
-        .primary-button:hover {
-            background: #62e785;
-        }
-
-        section {
-            scroll-margin-top: 130px;
-            margin-top: 55px;
-        }
-
-        .section-title {
-            font-size: 28px;
-            margin: 0 0 10px;
-        }
-
-        .section-description {
-            color: #aeb9b1;
-            margin: 0 0 24px;
-        }
-
-        .notice-list {
-            display: grid;
-            gap: 16px;
-        }
-
-        .notice {
-            padding: 22px;
-            border-radius: 16px;
-            background: rgba(13, 23, 16, 0.9);
-            border: 1px solid rgba(255,255,255,0.08);
-        }
-
-        .notice h3 {
-            margin: 0 0 10px;
-            font-size: 20px;
-        }
-
-        .notice p {
-            white-space: pre-wrap;
-            color: #c2cdc5;
-            line-height: 1.7;
-            margin: 0 0 12px;
-        }
-
-        .notice-date {
-            color: #809187;
-            font-size: 12px;
-        }
-
-        .notice-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: 16px;
-        }
-
-        .small-button {
-            border: 1px solid #34483a;
-            background: transparent;
-            color: #dce8de;
-            border-radius: 8px;
-            padding: 8px 12px;
-        }
-
-        .small-button:hover {
-            background: rgba(255,255,255,0.06);
-        }
-
-        .delete-button {
-            color: #ff9a9a;
-        }
-
-        .empty-box {
-            text-align: center;
-            padding: 55px 20px;
-            border-radius: 18px;
-            background: rgba(13, 23, 16, 0.88);
-            color: #9fac9f;
-            border: 1px solid rgba(255,255,255,0.07);
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
-        }
-
-        .info-card {
-            padding: 24px;
-            border-radius: 16px;
-            background: rgba(13, 23, 16, 0.9);
-            border: 1px solid rgba(255,255,255,0.07);
-        }
-
-        .info-card h3 {
-            margin-top: 0;
-            color: #65e884;
-        }
-
-        .info-card p {
-            color: #b7c2ba;
-            line-height: 1.7;
-            margin-bottom: 0;
-        }
-
-        .admin-panel {
-            display: none;
-            margin-top: 28px;
-            padding: 24px;
-            border-radius: 18px;
-            background: rgba(16, 29, 19, 0.96);
-            border: 1px solid rgba(82, 218, 113, 0.3);
-        }
-
-        .admin-panel h3 {
-            margin-top: 0;
-            color: #65e884;
-        }
-
-        .admin-panel input,
-        .admin-panel textarea,
-        .auth-box input {
-            width: 100%;
-            padding: 13px;
-            margin-bottom: 12px;
-            border-radius: 10px;
-            border: 1px solid #34483a;
-            outline: none;
-            color: white;
-            background: #0b140e;
-        }
-
-        .admin-panel input:focus,
-        .admin-panel textarea:focus,
-        .auth-box input:focus {
-            border-color: #55d876;
-        }
-
-        .admin-panel textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .admin-buttons {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .cancel-button {
-            border: 1px solid #34483a;
-            background: transparent;
-            color: #dce8de;
-            padding: 12px 17px;
-            border-radius: 10px;
-        }
-
-        .auth-box {
-            max-width: 450px;
-            margin: 30px auto 0;
-            padding: 25px;
-            border-radius: 18px;
-            background: rgba(13, 23, 16, 0.9);
-            border: 1px solid rgba(255,255,255,0.08);
-        }
-
-        .auth-box h3 {
-            margin-top: 0;
-        }
-
-        .auth-tabs {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 18px;
-        }
-
-        .auth-tab {
-            flex: 1;
-            padding: 11px;
-            border-radius: 9px;
-            border: 1px solid #34483a;
-            background: transparent;
-            color: #aeb9b1;
-        }
-
-        .auth-tab.active {
-            color: #061008;
-            background: #45c96a;
-            border-color: #45c96a;
-            font-weight: bold;
-        }
-
-        #authMessage {
-            min-height: 20px;
-            margin-top: 12px;
-            font-size: 13px;
-            color: #ffb1b1;
-        }
-
-        .social-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .social-links a {
-            display: inline-block;
-            padding: 13px 18px;
-            border-radius: 10px;
-            background: rgba(255,255,255,0.06);
-            color: #d7e1d9;
-        }
-
-        .social-links a:hover {
-            background: rgba(69,201,106,0.2);
-            color: #65e884;
-        }
-
-        footer {
-            text-align: center;
-            padding: 30px 20px;
-            color: #718077;
-            font-size: 13px;
-            border-top: 1px solid rgba(255,255,255,0.06);
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        @media (max-width: 700px) {
-            .header {
-                padding: 10px 14px;
-            }
-
-            .logo-title {
-                font-size: 17px;
-            }
-
-            .logo {
-                width: 42px;
-                height: 42px;
-                font-size: 25px;
-            }
-
-            nav {
-                gap: 17px;
-                padding-left: 10px;
-                padding-right: 10px;
-            }
-
-            nav a {
-                font-size: 14px;
-            }
-
-            .user-area {
-                gap: 6px;
-            }
-
-            #userName {
-                display: none;
-            }
-
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
-
-            main {
-                padding-top: 25px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>시지중 마인크래프트</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    color: #e8f0e9;
+    font-family: Arial, "Noto Sans KR", sans-serif;
+
+    background:
+        linear-gradient(rgba(7, 16, 9, 0.68), rgba(7, 16, 9, 0.9)),
+        url("./minecraft.png") center / cover fixed;
+
+    min-height: 100vh;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+input,
+textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* HEADER */
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    background: rgba(7, 15, 9, 0.94);
+    backdrop-filter: blur(14px);
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.header-inner {
+    max-width: 1180px;
+    margin: auto;
+    padding: 12px 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.logo {
+    width: 48px;
+    height: 48px;
+
+    border-radius: 13px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #45c96a;
+    color: #08120a;
+
+    font-size: 29px;
+    font-weight: bold;
+}
+
+.logo-title {
+    font-size: 22px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.user-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+#userName {
+    color: #65e884;
+    font-size: 15px;
+}
+
+.login-btn,
+.logout-btn {
+    padding: 11px 16px;
+    border-radius: 11px;
+
+    border: 1px solid #33483a;
+    background: rgba(255, 255, 255, 0.03);
+
+    color: white;
+}
+
+.login-btn:hover,
+.logout-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+nav {
+    max-width: 1180px;
+    margin: auto;
+    padding: 0 22px 15px;
+
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+}
+
+nav a {
+    color: #aab5ac;
+    font-size: 15px;
+}
+
+nav a:hover {
+    color: #65e884;
+}
+
+/* MAIN */
+
+main {
+    max-width: 1180px;
+    margin: auto;
+    padding: 45px 22px 80px;
+}
+
+.hero {
+    text-align: center;
+    padding: 40px 0 50px;
+}
+
+.hero h1 {
+    margin: 0 0 16px;
+
+    font-size: clamp(30px, 5vw, 55px);
+    letter-spacing: -2px;
+}
+
+.hero p {
+    margin: 0;
+
+    color: #b7c2ba;
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+/* SERVER */
+
+.server-card {
+    max-width: 720px;
+    margin: auto;
+    padding: 26px;
+
+    border-radius: 20px;
+
+    background: rgba(12, 24, 15, 0.91);
+    border: 1px solid rgba(82, 218, 113, 0.25);
+}
+
+.server-label {
+    margin-bottom: 10px;
+
+    color: #899b8f;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.server-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.server-address {
+    color: #66ec84;
+    font-size: 23px;
+    font-weight: bold;
+}
+
+.copy-btn,
+.primary-btn {
+    border: none;
+    border-radius: 10px;
+
+    padding: 12px 17px;
+
+    background: #45c96a;
+    color: #061008;
+    font-weight: bold;
+}
+
+.copy-btn:hover,
+.primary-btn:hover {
+    background: #62e785;
+}
+
+/* SECTION */
+
+section {
+    margin-top: 60px;
+    scroll-margin-top: 130px;
+}
+
+.section-title {
+    margin: 0 0 9px;
+    font-size: 28px;
+}
+
+.section-description {
+    margin: 0 0 24px;
+    color: #aeb9b1;
+}
+
+/* NOTICE */
+
+.notice-list {
+    display: grid;
+    gap: 16px;
+}
+
+.notice {
+    padding: 23px;
+
+    border-radius: 16px;
+
+    background: rgba(13, 25, 16, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.notice h3 {
+    margin: 0 0 11px;
+    font-size: 20px;
+}
+
+.notice p {
+    margin: 0 0 13px;
+
+    color: #c3cec6;
+    white-space: pre-wrap;
+    line-height: 1.75;
+}
+
+.notice-date {
+    color: #7f9085;
+    font-size: 12px;
+}
+
+.notice-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.small-btn {
+    padding: 8px 12px;
+
+    border-radius: 8px;
+    border: 1px solid #34483a;
+
+    background: transparent;
+    color: #dce8de;
+}
+
+.small-btn:hover {
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.delete-btn {
+    color: #ff9b9b;
+}
+
+.empty-box {
+    text-align: center;
+    padding: 48px 20px;
+
+    border-radius: 16px;
+
+    background: rgba(13, 25, 16, 0.88);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+
+    color: #a5b2a8;
+    line-height: 1.8;
+}
+
+/* INFO */
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.info-card {
+    padding: 24px;
+
+    border-radius: 16px;
+
+    background: rgba(13, 25, 16, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.info-card h3 {
+    margin-top: 0;
+    color: #65e884;
+}
+
+.info-card p {
+    margin-bottom: 0;
+
+    color: #b8c4ba;
+    line-height: 1.7;
+}
+
+/* ADMIN */
+
+#adminPanel {
+    display: none;
+
+    margin-top: 28px;
+    padding: 25px;
+
+    border-radius: 18px;
+
+    background: rgba(13, 27, 16, 0.96);
+    border: 1px solid rgba(82, 218, 113, 0.3);
+}
+
+#adminPanel h3 {
+    margin-top: 0;
+    color: #65e884;
+}
+
+#adminPanel input,
+#adminPanel textarea {
+    width: 100%;
+
+    padding: 13px;
+    margin-bottom: 12px;
+
+    border-radius: 10px;
+    border: 1px solid #34483a;
+
+    background: #0b140e;
+    color: #fff;
+
+    outline: none;
+}
+
+#adminPanel input:focus,
+#adminPanel textarea:focus {
+    border-color: #55d876;
+}
+
+#adminPanel textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.admin-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.cancel-btn {
+    padding: 12px 17px;
+
+    border-radius: 10px;
+    border: 1px solid #34483a;
+
+    background: transparent;
+    color: #dce8de;
+}
+
+/* CONTACT */
+
+.social-links {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.social-links a {
+    padding: 13px 18px;
+
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.06);
+
+    color: #dce6de;
+}
+
+.social-links a:hover {
+    background: rgba(69, 201, 106, 0.2);
+    color: #65e884;
+}
+
+/* FOOTER */
+
+footer {
+    text-align: center;
+    padding: 30px 20px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+
+    color: #748278;
+    font-size: 13px;
+}
+
+/* UTIL */
+
+.hidden {
+    display: none !important;
+}
+
+@media (max-width: 700px) {
+
+    .header-inner {
+        padding: 10px 14px;
+    }
+
+    .logo {
+        width: 42px;
+        height: 42px;
+        font-size: 24px;
+    }
+
+    .logo-title {
+        font-size: 17px;
+    }
+
+    #userName {
+        display: none;
+    }
+
+    nav {
+        gap: 17px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    nav a {
+        font-size: 14px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .server-address {
+        font-size: 18px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-<header class="top">
-    <div class="header">
-        <a href="#home" class="logo-area">
+<header>
+
+    <div class="header-inner">
+
+        <a href="./index.html" class="logo-link">
             <div class="logo">⌁</div>
             <div class="logo-title">시지중 마인크래프트</div>
         </a>
 
         <div class="user-area">
+
             <span id="userName"></span>
-            <button id="logoutButton" class="logout-button hidden">
+
+            <a id="loginLink" href="./login.html" class="login-btn">
+                로그인
+            </a>
+
+            <button id="logoutBtn" class="logout-btn hidden">
                 로그아웃
             </button>
+
         </div>
+
     </div>
+
 
     <nav>
         <a href="#home">홈</a>
@@ -487,53 +516,76 @@
         <a href="#participation">참여방법</a>
         <a href="#contact">문의</a>
     </nav>
+
 </header>
 
 
 <main>
 
     <section id="home" class="hero">
+
         <h1>시지중학교 마인크래프트 서버</h1>
+
         <p>
             시지중학교 학생들을 위한 비공식 마인크래프트 서버입니다.<br>
             서버의 새로운 소식과 중요한 안내를 확인하세요.
         </p>
+
     </section>
 
 
     <div class="server-card">
-        <div class="server-label">MINECRAFT JAVA SERVER</div>
 
-        <div class="server-address">
-            <strong id="serverAddress">sijiminecraft.m-c.kr</strong>
+        <div class="server-label">
+            MINECRAFT JAVA SERVER
+        </div>
 
-            <button class="copy-button" id="copyButton">
+        <div class="server-row">
+
+            <div class="server-address" id="serverAddress">
+                sijiminecraft.m-c.kr
+            </div>
+
+            <button id="copyBtn" class="copy-btn">
                 서버 주소 복사
             </button>
+
         </div>
+
     </div>
 
 
     <section id="notices">
-        <h2 class="section-title">공지사항</h2>
+
+        <h2 class="section-title">
+            공지사항
+        </h2>
+
         <p class="section-description">
-            서버 운영과 관련된 공지사항입니다.
+            서버 운영과 관련된 새로운 소식을 확인하세요.
         </p>
 
+
         <div id="noticeList" class="notice-list">
+
             <div class="empty-box">
                 공지사항을 불러오는 중입니다...
             </div>
+
         </div>
 
-        <div id="adminPanel" class="admin-panel">
-            <h3 id="adminTitle">관리자 공지 작성</h3>
+
+        <div id="adminPanel">
+
+            <h3 id="adminHeading">
+                관리자 공지 작성
+            </h3>
 
             <input
-                type="text"
                 id="noticeTitle"
-                placeholder="공지 제목"
+                type="text"
                 maxlength="100"
+                placeholder="공지 제목"
             >
 
             <textarea
@@ -541,57 +593,87 @@
                 placeholder="공지 내용을 입력하세요."
             ></textarea>
 
+
             <div class="admin-buttons">
-                <button class="primary-button" id="saveNoticeButton">
+
+                <button id="saveNoticeBtn" class="primary-btn">
                     공지 등록
                 </button>
 
-                <button class="cancel-button hidden" id="cancelEditButton">
+                <button id="cancelEditBtn" class="cancel-btn hidden">
                     수정 취소
                 </button>
+
             </div>
+
         </div>
+
     </section>
 
 
     <section id="participation">
-        <h2 class="section-title">참여방법</h2>
+
+        <h2 class="section-title">
+            참여방법
+        </h2>
+
         <p class="section-description">
-            서버에 참여하기 전에 아래 내용을 확인해주세요.
+            서버 참여 조건을 확인해주세요.
         </p>
 
+
         <div class="info-grid">
-            <div class="info-card">
-                <h3>누구나 참여 가능</h3>
-                <p>
-                    서버 참여 조건을 충족하는 학생이라면 자유롭게 참여할 수 있습니다.
-                </p>
-            </div>
 
             <div class="info-card">
-                <h3>타 학교 학생</h3>
+
+                <h3>시지중 학생</h3>
+
                 <p>
-                    다른 학교 학생은 운영진 인스타그램으로 문의해주세요.
+                    시지중학교 학생은 누구나 참여할 수 있습니다.
                 </p>
+
             </div>
 
+
             <div class="info-card">
-                <h3>서버 주소</h3>
+
+                <h3>타중 학생</h3>
+
                 <p>
-                    Java Edition에서 서버 주소를 입력하여 접속하세요.
+                    타 학교 학생은 서버 인스타그램으로 문의해주세요.
                 </p>
+
             </div>
+
+
+            <div class="info-card">
+
+                <h3>접속 방법</h3>
+
+                <p>
+                    마인크래프트 Java Edition에서 서버 주소를 입력하여 접속하세요.
+                </p>
+
+            </div>
+
         </div>
+
     </section>
 
 
     <section id="contact">
-        <h2 class="section-title">문의</h2>
+
+        <h2 class="section-title">
+            문의
+        </h2>
+
         <p class="section-description">
-            서버 관련 문의사항은 아래 SNS를 이용해주세요.
+            서버 참여 및 기타 문의사항은 인스타그램으로 연락해주세요.
         </p>
 
+
         <div class="social-links">
+
             <a
                 href="https://www.instagram.com/sijiminecraft.m_c.kr/"
                 target="_blank"
@@ -600,6 +682,7 @@
                 서버 인스타그램
             </a>
 
+
             <a
                 href="https://www.instagram.com/y2._uin"
                 target="_blank"
@@ -607,47 +690,9 @@
             >
                 운영자 인스타그램
             </a>
+
         </div>
-    </section>
 
-
-    <section id="authSection">
-        <div class="auth-box">
-            <h3>로그인 / 회원가입</h3>
-
-            <div class="auth-tabs">
-                <button class="auth-tab active" id="loginTab">
-                    로그인
-                </button>
-
-                <button class="auth-tab" id="signupTab">
-                    회원가입
-                </button>
-            </div>
-
-            <form id="authForm">
-                <input
-                    type="email"
-                    id="email"
-                    placeholder="이메일"
-                    required
-                >
-
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="비밀번호"
-                    minlength="6"
-                    required
-                >
-
-                <button type="submit" class="primary-button" id="authSubmit">
-                    로그인
-                </button>
-            </form>
-
-            <div id="authMessage"></div>
-        </div>
     </section>
 
 </main>
@@ -660,591 +705,520 @@
 
 
 <script>
-    /* =========================================================
-       Supabase 설정
-       ========================================================= */
 
-    const SUPABASE_URL = "https://gpmnozujzhebnkpnrfik.supabase.co";
+/* =====================================================
+   SUPABASE
+===================================================== */
 
-    const SUPABASE_KEY =
-        "sb_publishable_Df6zehKD_EARd9VnjMmtZw_GXvjE0uA";
+const SUPABASE_URL =
+    "https://gpmnozujzhebnkpnrfik.supabase.co";
 
-    const db = window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
+const SUPABASE_KEY =
+    "sb_publishable_Df6zehKD_EARd9VnjMmtZw_GXvjE0uA";
 
-
-    /* =========================================================
-       관리자 UUID
-       ========================================================= */
-
-    const ADMIN_UUID =
-        "1cbc80a5-1c59-4696-b4ab-28ec455156f0";
+const db = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
 
 
-    /* =========================================================
-       DOM
-       ========================================================= */
+/* =====================================================
+   관리자 UUID
+===================================================== */
 
-    const noticeList = document.getElementById("noticeList");
-    const adminPanel = document.getElementById("adminPanel");
-    const adminTitle = document.getElementById("adminTitle");
-
-    const noticeTitle = document.getElementById("noticeTitle");
-    const noticeContent = document.getElementById("noticeContent");
-
-    const saveNoticeButton = document.getElementById("saveNoticeButton");
-    const cancelEditButton = document.getElementById("cancelEditButton");
-
-    const userName = document.getElementById("userName");
-    const logoutButton = document.getElementById("logoutButton");
-
-    const authSection = document.getElementById("authSection");
-    const authForm = document.getElementById("authForm");
-
-    const emailInput = document.getElementById("email");
-    const passwordInput = document.getElementById("password");
-
-    const authSubmit = document.getElementById("authSubmit");
-    const authMessage = document.getElementById("authMessage");
-
-    const loginTab = document.getElementById("loginTab");
-    const signupTab = document.getElementById("signupTab");
-
-    const copyButton = document.getElementById("copyButton");
-    const serverAddress = document.getElementById("serverAddress");
+const ADMIN_UUID =
+    "1cbc80a5-1c59-4696-b4ab-28ec455156f0";
 
 
-    /* =========================================================
-       상태 변수
-       ========================================================= */
+/* =====================================================
+   DOM
+===================================================== */
 
-    let currentUser = null;
-    let isAdmin = false;
-    let authMode = "login";
-    let editingNoticeId = null;
+const noticeList = document.getElementById("noticeList");
+const adminPanel = document.getElementById("adminPanel");
+const adminHeading = document.getElementById("adminHeading");
+
+const noticeTitle = document.getElementById("noticeTitle");
+const noticeContent = document.getElementById("noticeContent");
+
+const saveNoticeBtn = document.getElementById("saveNoticeBtn");
+const cancelEditBtn = document.getElementById("cancelEditBtn");
+
+const userName = document.getElementById("userName");
+const loginLink = document.getElementById("loginLink");
+const logoutBtn = document.getElementById("logoutBtn");
+
+const copyBtn = document.getElementById("copyBtn");
+const serverAddress = document.getElementById("serverAddress");
 
 
-    /* =========================================================
-       HTML 보안 처리
-       ========================================================= */
+/* =====================================================
+   상태
+===================================================== */
 
-    function escapeHTML(value) {
-        return String(value ?? "")
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
+let currentUser = null;
+let isAdmin = false;
+let editingNoticeId = null;
+
+
+/* =====================================================
+   보안용 HTML 이스케이프
+===================================================== */
+
+function escapeHTML(value) {
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+/* =====================================================
+   날짜
+===================================================== */
+
+function formatDate(dateString) {
+    if (!dateString) return "";
+
+    return new Date(dateString).toLocaleString("ko-KR", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+}
+
+
+/* =====================================================
+   관리자 확인
+===================================================== */
+
+async function checkAdmin(user) {
+
+    if (!user) {
+        return false;
     }
 
+    const { data, error } = await db
+        .from("admins")
+        .select("user_id")
+        .eq("user_id", user.id)
+        .maybeSingle();
 
-    /* =========================================================
-       날짜 표시
-       ========================================================= */
+    if (error) {
+        console.error("관리자 확인 오류:", error);
+        return false;
+    }
 
-    function formatDate(dateString) {
-        if (!dateString) return "";
+    const result = !!data;
 
-        const date = new Date(dateString);
+    console.log("is_admin ->", result);
 
-        return date.toLocaleString("ko-KR", {
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-            hour: "2-digit",
-            minute: "2-digit"
+    return result;
+}
+
+
+/* =====================================================
+   공지사항 불러오기
+===================================================== */
+
+async function loadAnnouncements() {
+
+    noticeList.innerHTML = `
+        <div class="empty-box">
+            공지사항을 불러오는 중입니다...
+        </div>
+    `;
+
+    const { data, error } = await db
+        .from("announcements")
+        .select("*")
+        .order("created_at", {
+            ascending: false
         });
-    }
 
 
-    /* =========================================================
-       공지사항 불러오기
-       ========================================================= */
+    if (error) {
 
-    async function loadAnnouncements() {
+        console.error("공지사항 불러오기 오류:", error);
+
         noticeList.innerHTML = `
             <div class="empty-box">
-                공지사항을 불러오는 중입니다...
+                공지사항을 불러오지 못했습니다.<br>
+                잠시 후 다시 시도해주세요.
             </div>
         `;
 
-        const { data, error } = await db
-            .from("announcements")
-            .select("*")
-            .order("created_at", {
-                ascending: false
-            });
-
-        if (error) {
-            console.error("공지 불러오기 실패:", error);
-
-            noticeList.innerHTML = `
-                <div class="empty-box">
-                    공지사항을 불러오지 못했습니다.
-                    <br><br>
-                    <small>
-                        Supabase announcements 테이블과 RLS 정책을 확인하세요.
-                    </small>
-                </div>
-            `;
-
-            return;
-        }
-
-        if (!data || data.length === 0) {
-            noticeList.innerHTML = `
-                <div class="empty-box">
-                    등록된 공지사항이 없습니다.
-                </div>
-            `;
-
-            return;
-        }
-
-        noticeList.innerHTML = data.map(item => {
-            const safeTitle = escapeHTML(item.title);
-            const safeContent = escapeHTML(item.content);
-            const safeDate = escapeHTML(formatDate(item.created_at));
-
-            let actions = "";
-
-            if (isAdmin) {
-                actions = `
-                    <div class="notice-actions">
-                        <button
-                            class="small-button"
-                            onclick="startEditNotice(${Number(item.id)})"
-                        >
-                            수정
-                        </button>
-
-                        <button
-                            class="small-button delete-button"
-                            onclick="deleteNotice(${Number(item.id)})"
-                        >
-                            삭제
-                        </button>
-                    </div>
-                `;
-            }
-
-            return `
-                <article class="notice">
-                    <h3>${safeTitle}</h3>
-
-                    <p>${safeContent}</p>
-
-                    <div class="notice-date">
-                        작성일: ${safeDate}
-                    </div>
-
-                    ${actions}
-                </article>
-            `;
-        }).join("");
+        return;
     }
 
 
-    /* =========================================================
-       관리자 여부 확인
-       ========================================================= */
+    if (!data || data.length === 0) {
 
-    async function checkAdmin(user) {
-        if (!user) {
-            return false;
-        }
+        noticeList.innerHTML = `
+            <div class="empty-box">
+                현재 등록된 공지사항이 없습니다.
+            </div>
+        `;
 
-        /*
-         * 관리자 테이블에서 실제 로그인 계정 확인
-         */
-        const { data, error } = await db
-            .from("admins")
-            .select("user_id")
-            .eq("user_id", user.id)
-            .maybeSingle();
-
-        if (error) {
-            console.error("관리자 확인 실패:", error);
-            return false;
-        }
-
-        const result = !!data;
-
-        console.log("is_admin ->", result);
-
-        return result;
+        return;
     }
 
 
-    /* =========================================================
-       로그인 상태 화면 갱신
-       ========================================================= */
+    noticeList.innerHTML = data.map(item => {
 
-    async function updateAuthUI(user) {
-        currentUser = user;
+        const title = escapeHTML(item.title);
+        const content = escapeHTML(item.content);
+        const date = escapeHTML(formatDate(item.created_at));
 
-        if (user) {
-            userName.textContent =
-                user.user_metadata?.name ||
-                user.email?.split("@")[0] ||
-                "사용자";
+        let actions = "";
 
-            logoutButton.classList.remove("hidden");
-            authSection.classList.add("hidden");
+        if (isAdmin) {
 
-            isAdmin = await checkAdmin(user);
+            actions = `
+                <div class="notice-actions">
 
-            if (isAdmin) {
-                adminPanel.style.display = "block";
-            } else {
-                adminPanel.style.display = "none";
-            }
+                    <button
+                        class="small-btn"
+                        onclick="startEditNotice(${Number(item.id)})"
+                    >
+                        수정
+                    </button>
+
+                    <button
+                        class="small-btn delete-btn"
+                        onclick="deleteNotice(${Number(item.id)})"
+                    >
+                        삭제
+                    </button>
+
+                </div>
+            `;
+        }
+
+
+        return `
+            <article class="notice">
+
+                <h3>${title}</h3>
+
+                <p>${content}</p>
+
+                <div class="notice-date">
+                    작성일: ${date}
+                </div>
+
+                ${actions}
+
+            </article>
+        `;
+
+    }).join("");
+
+}
+
+
+/* =====================================================
+   로그인 UI 갱신
+===================================================== */
+
+async function updateAuthUI(user) {
+
+    currentUser = user;
+
+    if (user) {
+
+        userName.textContent =
+            user.email?.split("@")[0] || "사용자";
+
+        loginLink.classList.add("hidden");
+        logoutBtn.classList.remove("hidden");
+
+        isAdmin = await checkAdmin(user);
+
+        if (isAdmin) {
+            adminPanel.style.display = "block";
         } else {
-            userName.textContent = "";
-            logoutButton.classList.add("hidden");
-
-            authSection.classList.remove("hidden");
-
             adminPanel.style.display = "none";
-            isAdmin = false;
         }
 
+    } else {
+
+        currentUser = null;
+        isAdmin = false;
+
+        userName.textContent = "";
+
+        loginLink.classList.remove("hidden");
+        logoutBtn.classList.add("hidden");
+
+        adminPanel.style.display = "none";
+    }
+
+    await loadAnnouncements();
+}
+
+
+/* =====================================================
+   초기 로그인 상태
+===================================================== */
+
+async function initialize() {
+
+    const {
+        data: {
+            session
+        }
+    } = await db.auth.getSession();
+
+    await updateAuthUI(session?.user || null);
+}
+
+
+/* =====================================================
+   로그아웃
+===================================================== */
+
+logoutBtn.addEventListener("click", async function() {
+
+    const { error } = await db.auth.signOut();
+
+    if (error) {
+        alert("로그아웃에 실패했습니다.");
+        console.error(error);
+        return;
+    }
+
+    await updateAuthUI(null);
+});
+
+
+/* =====================================================
+   공지 작성 또는 수정
+===================================================== */
+
+saveNoticeBtn.addEventListener("click", async function() {
+
+    if (!currentUser || !isAdmin) {
+        alert("관리자만 사용할 수 있습니다.");
+        return;
+    }
+
+    const title = noticeTitle.value.trim();
+    const content = noticeContent.value.trim();
+
+    if (!title || !content) {
+        alert("제목과 내용을 모두 입력해주세요.");
+        return;
+    }
+
+    saveNoticeBtn.disabled = true;
+
+    try {
+
+        let result;
+
+        if (editingNoticeId === null) {
+
+            result = await db
+                .from("announcements")
+                .insert({
+                    title: title,
+                    content: content
+                });
+
+        } else {
+
+            result = await db
+                .from("announcements")
+                .update({
+                    title: title,
+                    content: content,
+                    updated_at: new Date().toISOString()
+                })
+                .eq("id", editingNoticeId);
+        }
+
+
+        if (result.error) {
+            throw result.error;
+        }
+
+
+        alert(
+            editingNoticeId === null
+                ? "공지사항이 등록되었습니다."
+                : "공지사항이 수정되었습니다."
+        );
+
+
+        resetNoticeForm();
         await loadAnnouncements();
+
+    } catch (error) {
+
+        console.error("공지 저장 오류:", error);
+        alert("공지 저장 실패: " + error.message);
+
+    } finally {
+
+        saveNoticeBtn.disabled = false;
+    }
+
+});
+
+
+/* =====================================================
+   공지 수정
+===================================================== */
+
+async function startEditNotice(id) {
+
+    if (!isAdmin) return;
+
+    const { data, error } = await db
+        .from("announcements")
+        .select("*")
+        .eq("id", id)
+        .maybeSingle();
+
+
+    if (error || !data) {
+        alert("공지사항을 불러오지 못했습니다.");
+        return;
     }
 
 
-    /* =========================================================
-       인증 상태 초기화
-       ========================================================= */
+    editingNoticeId = id;
 
-    async function initialize() {
-        const {
-            data: {
-                session
-            }
-        } = await db.auth.getSession();
+    noticeTitle.value = data.title || "";
+    noticeContent.value = data.content || "";
 
+    adminHeading.textContent = "공지사항 수정";
+    saveNoticeBtn.textContent = "공지 수정";
+
+    cancelEditBtn.classList.remove("hidden");
+
+    adminPanel.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+}
+
+
+/* =====================================================
+   수정 취소
+===================================================== */
+
+function resetNoticeForm() {
+
+    editingNoticeId = null;
+
+    noticeTitle.value = "";
+    noticeContent.value = "";
+
+    adminHeading.textContent = "관리자 공지 작성";
+    saveNoticeBtn.textContent = "공지 등록";
+
+    cancelEditBtn.classList.add("hidden");
+}
+
+
+cancelEditBtn.addEventListener("click", function() {
+    resetNoticeForm();
+});
+
+
+/* =====================================================
+   공지 삭제
+===================================================== */
+
+async function deleteNotice(id) {
+
+    if (!isAdmin) {
+        alert("관리자만 삭제할 수 있습니다.");
+        return;
+    }
+
+    if (!confirm("이 공지사항을 삭제하시겠습니까?")) {
+        return;
+    }
+
+
+    const { error } = await db
+        .from("announcements")
+        .delete()
+        .eq("id", id);
+
+
+    if (error) {
+        console.error("공지 삭제 오류:", error);
+        alert("공지 삭제 실패: " + error.message);
+        return;
+    }
+
+
+    if (editingNoticeId === id) {
+        resetNoticeForm();
+    }
+
+    await loadAnnouncements();
+}
+
+
+/* =====================================================
+   서버 주소 복사
+===================================================== */
+
+copyBtn.addEventListener("click", async function() {
+
+    const address = serverAddress.textContent.trim();
+
+    try {
+
+        await navigator.clipboard.writeText(address);
+
+        const oldText = copyBtn.textContent;
+
+        copyBtn.textContent = "복사 완료!";
+
+        setTimeout(() => {
+            copyBtn.textContent = oldText;
+        }, 1500);
+
+    } catch (error) {
+
+        alert("복사하지 못했습니다. 서버 주소를 직접 복사해주세요.");
+    }
+
+});
+
+
+/* =====================================================
+   로그인 상태 변화 감지
+===================================================== */
+
+db.auth.onAuthStateChange(async function(event, session) {
+
+    if (event === "SIGNED_IN") {
         await updateAuthUI(session?.user || null);
     }
 
-
-    /* =========================================================
-       로그인 / 회원가입 모드 변경
-       ========================================================= */
-
-    function setAuthMode(mode) {
-        authMode = mode;
-
-        authMessage.textContent = "";
-
-        if (mode === "login") {
-            loginTab.classList.add("active");
-            signupTab.classList.remove("active");
-
-            authSubmit.textContent = "로그인";
-        } else {
-            loginTab.classList.remove("active");
-            signupTab.classList.add("active");
-
-            authSubmit.textContent = "회원가입";
-        }
-    }
-
-    loginTab.addEventListener("click", () => {
-        setAuthMode("login");
-    });
-
-    signupTab.addEventListener("click", () => {
-        setAuthMode("signup");
-    });
-
-
-    /* =========================================================
-       로그인 / 회원가입 처리
-       ========================================================= */
-
-    authForm.addEventListener("submit", async function(event) {
-        event.preventDefault();
-
-        const email = emailInput.value.trim();
-        const password = passwordInput.value;
-
-        if (!email || !password) {
-            authMessage.textContent = "이메일과 비밀번호를 입력하세요.";
-            return;
-        }
-
-        authSubmit.disabled = true;
-        authMessage.style.color = "#aeb9b1";
-        authMessage.textContent = "처리 중입니다...";
-
-        try {
-            if (authMode === "login") {
-                const { data, error } = await db.auth.signInWithPassword({
-                    email,
-                    password
-                });
-
-                if (error) {
-                    throw error;
-                }
-
-                authMessage.style.color = "#65e884";
-                authMessage.textContent = "로그인되었습니다.";
-
-                await updateAuthUI(data.user);
-
-                authForm.reset();
-            } else {
-                const { error } = await db.auth.signUp({
-                    email,
-                    password
-                });
-
-                if (error) {
-                    throw error;
-                }
-
-                authMessage.style.color = "#65e884";
-                authMessage.textContent =
-                    "회원가입이 완료되었습니다. 이메일 인증이 필요할 수 있습니다.";
-
-                setAuthMode("login");
-            }
-        } catch (error) {
-            console.error("인증 오류:", error);
-
-            authMessage.style.color = "#ff9d9d";
-
-            if (error.message?.includes("Invalid login credentials")) {
-                authMessage.textContent =
-                    "이메일 또는 비밀번호가 올바르지 않습니다.";
-            } else if (error.message?.includes("already registered")) {
-                authMessage.textContent =
-                    "이미 가입된 이메일입니다.";
-            } else {
-                authMessage.textContent =
-                    error.message || "처리 중 오류가 발생했습니다.";
-            }
-        } finally {
-            authSubmit.disabled = false;
-        }
-    });
-
-
-    /* =========================================================
-       로그아웃
-       ========================================================= */
-
-    logoutButton.addEventListener("click", async function() {
-        const { error } = await db.auth.signOut();
-
-        if (error) {
-            console.error("로그아웃 실패:", error);
-            alert("로그아웃에 실패했습니다.");
-            return;
-        }
-
+    if (event === "SIGNED_OUT") {
         await updateAuthUI(null);
-    });
-
-
-    /* =========================================================
-       공지 작성
-       ========================================================= */
-
-    saveNoticeButton.addEventListener("click", async function() {
-        if (!currentUser || !isAdmin) {
-            alert("관리자만 공지를 작성할 수 있습니다.");
-            return;
-        }
-
-        const title = noticeTitle.value.trim();
-        const content = noticeContent.value.trim();
-
-        if (!title || !content) {
-            alert("공지 제목과 내용을 모두 입력하세요.");
-            return;
-        }
-
-        saveNoticeButton.disabled = true;
-
-        try {
-            let result;
-
-            if (editingNoticeId === null) {
-                result = await db
-                    .from("announcements")
-                    .insert({
-                        title: title,
-                        content: content
-                    });
-            } else {
-                result = await db
-                    .from("announcements")
-                    .update({
-                        title: title,
-                        content: content,
-                        updated_at: new Date().toISOString()
-                    })
-                    .eq("id", editingNoticeId);
-            }
-
-            if (result.error) {
-                throw result.error;
-            }
-
-            alert(
-                editingNoticeId === null
-                    ? "공지사항이 등록되었습니다."
-                    : "공지사항이 수정되었습니다."
-            );
-
-            resetNoticeForm();
-            await loadAnnouncements();
-
-        } catch (error) {
-            console.error("공지 저장 실패:", error);
-            alert("공지 저장 실패: " + error.message);
-        } finally {
-            saveNoticeButton.disabled = false;
-        }
-    });
-
-
-    /* =========================================================
-       공지 수정 시작
-       ========================================================= */
-
-    async function startEditNotice(id) {
-        if (!isAdmin) {
-            return;
-        }
-
-        const { data, error } = await db
-            .from("announcements")
-            .select("*")
-            .eq("id", id)
-            .maybeSingle();
-
-        if (error || !data) {
-            alert("공지사항을 불러오지 못했습니다.");
-            return;
-        }
-
-        editingNoticeId = id;
-
-        noticeTitle.value = data.title || "";
-        noticeContent.value = data.content || "";
-
-        adminTitle.textContent = "공지사항 수정";
-        saveNoticeButton.textContent = "공지 수정";
-        cancelEditButton.classList.remove("hidden");
-
-        adminPanel.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-        });
     }
 
-
-    /* =========================================================
-       공지 수정 취소
-       ========================================================= */
-
-    function resetNoticeForm() {
-        editingNoticeId = null;
-
-        noticeTitle.value = "";
-        noticeContent.value = "";
-
-        adminTitle.textContent = "관리자 공지 작성";
-        saveNoticeButton.textContent = "공지 등록";
-        cancelEditButton.classList.add("hidden");
-    }
-
-    cancelEditButton.addEventListener("click", function() {
-        resetNoticeForm();
-    });
+});
 
 
-    /* =========================================================
-       공지 삭제
-       ========================================================= */
+/* =====================================================
+   실행
+===================================================== */
 
-    async function deleteNotice(id) {
-        if (!isAdmin) {
-            alert("관리자만 공지를 삭제할 수 있습니다.");
-            return;
-        }
-
-        if (!confirm("이 공지사항을 삭제하시겠습니까?")) {
-            return;
-        }
-
-        const { error } = await db
-            .from("announcements")
-            .delete()
-            .eq("id", id);
-
-        if (error) {
-            console.error("공지 삭제 실패:", error);
-            alert("공지 삭제 실패: " + error.message);
-            return;
-        }
-
-        if (editingNoticeId === id) {
-            resetNoticeForm();
-        }
-
-        await loadAnnouncements();
-    }
-
-
-    /* =========================================================
-       서버 주소 복사
-       ========================================================= */
-
-    copyButton.addEventListener("click", async function() {
-        const address = serverAddress.textContent.trim();
-
-        try {
-            await navigator.clipboard.writeText(address);
-
-            const oldText = copyButton.textContent;
-            copyButton.textContent = "복사 완료!";
-
-            setTimeout(() => {
-                copyButton.textContent = oldText;
-            }, 1500);
-        } catch (error) {
-            alert("복사하지 못했습니다. 서버 주소를 직접 복사해주세요.");
-        }
-    });
-
-
-    /* =========================================================
-       Supabase 로그인 상태 변화 감지
-       ========================================================= */
-
-    db.auth.onAuthStateChange(async function(event, session) {
-        if (event === "SIGNED_IN") {
-            await updateAuthUI(session?.user || null);
-        }
-
-        if (event === "SIGNED_OUT") {
-            await updateAuthUI(null);
-        }
-    });
-
-
-    /* =========================================================
-       시작
-       ========================================================= */
-
-    initialize();
+initialize();
 
 </script>
 
