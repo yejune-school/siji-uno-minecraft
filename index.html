@@ -9,11 +9,6 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
-/* ==================================================
-   기본
-================================================== */
-
 * {
     box-sizing: border-box;
 }
@@ -61,10 +56,18 @@ textarea {
     font: inherit;
 }
 
+button {
+    cursor: pointer;
+}
 
-/* ==================================================
-   상단
-================================================== */
+.hidden {
+    display: none !important;
+}
+
+
+/* =========================
+   HEADER
+========================= */
 
 .site-header {
     position: sticky;
@@ -72,7 +75,6 @@ textarea {
     z-index: 1000;
 
     background: rgba(5, 9, 13, 0.94);
-
     border-bottom: 1px solid rgba(255,255,255,0.07);
 
     backdrop-filter: blur(14px);
@@ -80,10 +82,9 @@ textarea {
 
 .header-inner {
     width: min(1180px, calc(100% - 32px));
+    min-height: 58px;
 
     margin: 0 auto;
-
-    min-height: 58px;
 
     display: flex;
     align-items: center;
@@ -113,9 +114,7 @@ textarea {
     color: white;
 
     font-size: 17px;
-
-    box-shadow:
-        0 6px 20px rgba(39,125,200,0.3);
+    font-weight: 900;
 }
 
 .header-right {
@@ -137,26 +136,19 @@ textarea {
 
     background: rgba(255,255,255,0.025);
     color: #dce8f3;
-
-    cursor: pointer;
 }
 
 .header-button:hover {
     background: rgba(60,140,220,0.10);
 }
 
-.hidden {
-    display: none !important;
-}
 
-
-/* ==================================================
-   메뉴
-================================================== */
+/* =========================
+   NAV
+========================= */
 
 .nav {
     width: min(1180px, calc(100% - 32px));
-
     height: 42px;
 
     margin: 0 auto;
@@ -178,22 +170,21 @@ textarea {
 }
 
 
-/* ==================================================
-   메인
-================================================== */
+/* =========================
+   MAIN
+========================= */
 
 main {
     width: min(1180px, calc(100% - 32px));
 
     margin: 0 auto;
-
     padding-bottom: 100px;
 }
 
 
-/* ==================================================
+/* =========================
    HERO
-================================================== */
+========================= */
 
 .hero {
     padding: 100px 0 78px;
@@ -203,15 +194,12 @@ main {
     display: inline-block;
 
     margin-bottom: 18px;
-
     padding: 7px 11px;
 
     border-radius: 999px;
-
     border: 1px solid rgba(75,160,235,0.22);
 
     color: #71baff;
-
     background: rgba(37,112,180,0.08);
 
     font-size: 11px;
@@ -225,7 +213,6 @@ main {
 
     font-size: clamp(40px, 6vw, 70px);
     line-height: 1.06;
-
     letter-spacing: -3px;
 }
 
@@ -245,9 +232,9 @@ main {
 }
 
 
-/* ==================================================
-   서버 주소
-================================================== */
+/* =========================
+   SERVER
+========================= */
 
 .server-box {
     padding: 22px 24px;
@@ -269,7 +256,6 @@ main {
     justify-content: space-between;
 
     gap: 15px;
-
     flex-wrap: wrap;
 }
 
@@ -297,22 +283,18 @@ main {
     border-radius: 8px;
 
     background: rgba(40,125,205,0.10);
-
     color: #b9ddfb;
 
     font-size: 12px;
-
-    cursor: pointer;
 }
 
 
-/* ==================================================
-   섹션
-================================================== */
+/* =========================
+   SECTION
+========================= */
 
 .section {
     margin-top: 88px;
-
     scroll-margin-top: 115px;
 }
 
@@ -332,9 +314,9 @@ main {
 }
 
 
-/* ==================================================
-   공지
-================================================== */
+/* =========================
+   NOTICE
+========================= */
 
 .notice-list {
     display: grid;
@@ -356,7 +338,6 @@ main {
 
 .notice-title {
     margin: 0 0 9px;
-
     font-size: 17px;
 }
 
@@ -397,8 +378,6 @@ main {
     background: transparent;
     color: #b4c5d5;
 
-    cursor: pointer;
-
     font-size: 11px;
 }
 
@@ -426,15 +405,14 @@ main {
 }
 
 
-/* ==================================================
-   관리자
-================================================== */
+/* =========================
+   ADMIN
+========================= */
 
 .admin-panel {
     display: none;
 
     margin-top: 15px;
-
     padding: 20px;
 
     border: 1px solid rgba(66,151,226,0.25);
@@ -447,7 +425,6 @@ main {
     margin: 0 0 14px;
 
     color: #73bcff;
-
     font-size: 15px;
 }
 
@@ -474,7 +451,6 @@ main {
 
 .admin-textarea {
     min-height: 125px;
-
     resize: vertical;
 }
 
@@ -499,13 +475,7 @@ main {
     background: #176cad;
     color: white;
 
-    cursor: pointer;
-
     font-size: 12px;
-}
-
-.admin-primary:hover {
-    background: #2180cb;
 }
 
 .admin-primary:disabled {
@@ -521,21 +491,18 @@ main {
     background: transparent;
     color: #aebdca;
 
-    cursor: pointer;
-
     font-size: 12px;
 }
 
 
-/* ==================================================
-   참여방법
-================================================== */
+/* =========================
+   INFO
+========================= */
 
 .info-grid {
     display: grid;
 
-    grid-template-columns:
-        repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);
 
     gap: 14px;
 }
@@ -571,7 +538,6 @@ main {
 
 .info-card h3 {
     margin: 0 0 8px;
-
     font-size: 16px;
 }
 
@@ -585,22 +551,20 @@ main {
 }
 
 
-/* ==================================================
-   문의
-================================================== */
+/* =========================
+   CONTACT
+========================= */
 
 .contact-grid {
     display: grid;
 
-    grid-template-columns:
-        repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr);
 
     gap: 14px;
 }
 
 .social-card {
     display: flex;
-
     align-items: center;
     justify-content: space-between;
 
@@ -620,9 +584,7 @@ main {
 
 .social-left {
     display: flex;
-
     align-items: center;
-
     gap: 12px;
 }
 
@@ -644,7 +606,6 @@ main {
         );
 
     color: white;
-
     font-size: 18px;
 }
 
@@ -657,20 +618,18 @@ main {
     margin-top: 3px;
 
     color: #66798b;
-
     font-size: 11px;
 }
 
 .social-link {
     color: #64b2ff;
-
     font-size: 11px;
 }
 
 
-/* ==================================================
+/* =========================
    FOOTER
-================================================== */
+========================= */
 
 footer {
     width: min(1180px, calc(100% - 32px));
@@ -688,9 +647,9 @@ footer {
 }
 
 
-/* ==================================================
-   모바일
-================================================== */
+/* =========================
+   MOBILE
+========================= */
 
 @media (max-width: 760px) {
 
@@ -705,7 +664,6 @@ footer {
 
     .nav {
         width: calc(100% - 20px);
-
         gap: 17px;
     }
 
@@ -737,7 +695,6 @@ footer {
     .server-address {
         font-size: 18px;
     }
-
 }
 
 </style>
@@ -746,19 +703,11 @@ footer {
 
 <body>
 
-
-<!-- ==================================================
-     HEADER
-================================================== -->
-
 <header class="site-header">
 
     <div class="header-inner">
 
-        <a
-            href="./index.html"
-            class="brand"
-        >
+        <a href="./index.html" class="brand">
 
             <div class="brand-icon">
                 ◆
@@ -775,7 +724,6 @@ footer {
 
             <span id="userName"></span>
 
-
             <a
                 id="loginBtn"
                 href="./login.html"
@@ -783,7 +731,6 @@ footer {
             >
                 로그인
             </a>
-
 
             <button
                 id="logoutBtn"
@@ -800,40 +747,19 @@ footer {
 
     <nav class="nav">
 
-        <a href="#home">
-            홈
-        </a>
-
-        <a href="#notices">
-            공지사항
-        </a>
-
-        <a href="#participation">
-            참여방법
-        </a>
-
-        <a href="#contact">
-            문의
-        </a>
+        <a href="#home">홈</a>
+        <a href="#notices">공지사항</a>
+        <a href="#participation">참여방법</a>
+        <a href="#contact">문의</a>
 
     </nav>
 
 </header>
 
 
-<!-- ==================================================
-     MAIN
-================================================== -->
-
 <main>
 
-
-    <!-- HERO -->
-
-    <section
-        id="home"
-        class="hero"
-    >
+    <section id="home" class="hero">
 
         <div class="hero-badge">
             ● SIJI MINECRAFT SERVER
@@ -853,9 +779,6 @@ footer {
 
     </section>
 
-
-
-    <!-- SERVER -->
 
     <div class="server-box">
 
@@ -890,9 +813,6 @@ footer {
     </div>
 
 
-
-    <!-- NOTICE -->
-
     <section
         id="notices"
         class="section"
@@ -918,8 +838,6 @@ footer {
 
         </div>
 
-
-        <!-- 관리자 패널 -->
 
         <div
             id="adminPanel"
@@ -976,9 +894,6 @@ footer {
     </section>
 
 
-
-    <!-- PARTICIPATION -->
-
     <section
         id="participation"
         class="section"
@@ -994,7 +909,6 @@ footer {
 
 
         <div class="info-grid">
-
 
             <article class="info-card">
 
@@ -1046,14 +960,10 @@ footer {
 
             </article>
 
-
         </div>
 
     </section>
 
-
-
-    <!-- CONTACT -->
 
     <section
         id="contact"
@@ -1070,7 +980,6 @@ footer {
 
 
         <div class="contact-grid">
-
 
             <a
                 class="social-card"
@@ -1107,7 +1016,6 @@ footer {
             </a>
 
 
-
             <a
                 class="social-card"
                 href="https://www.instagram.com/y2._uin/"
@@ -1142,7 +1050,6 @@ footer {
 
             </a>
 
-
         </div>
 
     </section>
@@ -1150,26 +1057,17 @@ footer {
 </main>
 
 
-
-<!-- ==================================================
-     FOOTER
-================================================== -->
-
 <footer>
-
     시지중학교 비공식 마인크래프트 서버<br>
-
     본 서버는 시지중학교 공식 기관과 무관한 비공식 서버입니다.
-
 </footer>
-
 
 
 <script>
 
-/* =========================================================
+/* =====================================================
    SUPABASE
-========================================================= */
+===================================================== */
 
 const SUPABASE_URL =
     "https://gpmnozujzhebnkpnrfik.supabase.co";
@@ -1177,25 +1075,31 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
     "sb_publishable_Df6zehKD_EARd9VnjMmtZw_GXvjE0uA";
 
-
 const client =
     window.supabase.createClient(
         SUPABASE_URL,
-        SUPABASE_KEY
+        SUPABASE_KEY,
+        {
+            auth: {
+                persistSession: true,
+                autoRefreshToken: true,
+                detectSessionInUrl: true
+            }
+        }
     );
 
 
-/* =========================================================
+/* =====================================================
    ADMIN UUID
-========================================================= */
+===================================================== */
 
 const ADMIN_UUID =
     "1cbc80a5-1c59-4696-b4ab-28ec455156f0";
 
 
-/* =========================================================
+/* =====================================================
    DOM
-========================================================= */
+===================================================== */
 
 const userName =
     document.getElementById("userName");
@@ -1234,20 +1138,18 @@ const serverAddress =
     document.getElementById("serverAddress");
 
 
-/* =========================================================
+/* =====================================================
    STATE
-========================================================= */
+===================================================== */
 
 let currentUser = null;
-
 let isAdmin = false;
-
 let editingNoticeId = null;
 
 
-/* =========================================================
+/* =====================================================
    XSS
-========================================================= */
+===================================================== */
 
 function escapeHTML(value) {
 
@@ -1260,15 +1162,13 @@ function escapeHTML(value) {
 }
 
 
-/* =========================================================
+/* =====================================================
    DATE
-========================================================= */
+===================================================== */
 
 function formatDate(value) {
 
-    if (!value) {
-        return "";
-    }
+    if (!value) return "";
 
     const date =
         new Date(value);
@@ -1290,9 +1190,9 @@ function formatDate(value) {
 }
 
 
-/* =========================================================
-   CHECK ADMIN
-========================================================= */
+/* =====================================================
+   ADMIN
+===================================================== */
 
 async function checkAdmin(user) {
 
@@ -1341,9 +1241,9 @@ async function checkAdmin(user) {
 }
 
 
-/* =========================================================
-   LOAD NOTICES
-========================================================= */
+/* =====================================================
+   NOTICE
+===================================================== */
 
 async function loadAnnouncements() {
 
@@ -1381,8 +1281,7 @@ async function loadAnnouncements() {
 
         noticeList.innerHTML = `
             <div class="empty-notice">
-                공지사항을 불러오지 못했습니다.<br>
-                잠시 후 다시 확인해주세요.
+                공지사항을 불러오지 못했습니다.
             </div>
         `;
 
@@ -1407,25 +1306,18 @@ async function loadAnnouncements() {
 
     noticeList.innerHTML =
         data.map(
-            function(item) {
+            item => {
 
                 const id =
                     Number(item.id);
 
-
                 const title =
-                    escapeHTML(
-                        item.title
-                    );
-
+                    escapeHTML(item.title);
 
                 const content =
-                    escapeHTML(
-                        item.content
-                    );
+                    escapeHTML(item.content);
 
-
-                const date =
+                const created =
                     escapeHTML(
                         formatDate(
                             item.created_at
@@ -1443,35 +1335,32 @@ async function loadAnnouncements() {
                         .getTime();
 
 
-                let actions = "";
+                const actions =
+                    isAdmin
+                        ? `
+                            <div class="notice-actions">
 
+                                <button
+                                    type="button"
+                                    class="notice-action"
+                                    data-action="edit"
+                                    data-id="${id}"
+                                >
+                                    수정
+                                </button>
 
-                if (isAdmin) {
+                                <button
+                                    type="button"
+                                    class="notice-action notice-delete"
+                                    data-action="delete"
+                                    data-id="${id}"
+                                >
+                                    삭제
+                                </button>
 
-                    actions = `
-                        <div class="notice-actions">
-
-                            <button
-                                type="button"
-                                class="notice-action"
-                                data-action="edit"
-                                data-id="${id}"
-                            >
-                                수정
-                            </button>
-
-                            <button
-                                type="button"
-                                class="notice-action notice-delete"
-                                data-action="delete"
-                                data-id="${id}"
-                            >
-                                삭제
-                            </button>
-
-                        </div>
-                    `;
-                }
+                            </div>
+                        `
+                        : "";
 
 
                 return `
@@ -1486,7 +1375,7 @@ async function loadAnnouncements() {
                         </p>
 
                         <span class="notice-date">
-                            ${date}
+                            작성일: ${created}
                             ${edited ? " · 수정됨" : ""}
                         </span>
 
@@ -1494,15 +1383,14 @@ async function loadAnnouncements() {
 
                     </article>
                 `;
-
             }
         ).join("");
 }
 
 
-/* =========================================================
+/* =====================================================
    EVENT DELEGATION
-========================================================= */
+===================================================== */
 
 noticeList.addEventListener(
     "click",
@@ -1510,7 +1398,7 @@ noticeList.addEventListener(
 
         const button =
             event.target.closest(
-                "[data-action]"
+                "button[data-action]"
             );
 
 
@@ -1521,7 +1409,6 @@ noticeList.addEventListener(
 
         const action =
             button.dataset.action;
-
 
         const id =
             Number(
@@ -1535,25 +1422,21 @@ noticeList.addEventListener(
 
 
         if (action === "edit") {
-
             await editNotice(id);
-
         }
 
 
         if (action === "delete") {
-
             await deleteNotice(id);
-
         }
 
     }
 );
 
 
-/* =========================================================
+/* =====================================================
    AUTH UI
-========================================================= */
+===================================================== */
 
 async function updateAuthUI(user) {
 
@@ -1611,9 +1494,9 @@ async function updateAuthUI(user) {
 }
 
 
-/* =========================================================
-   INITIAL SESSION
-========================================================= */
+/* =====================================================
+   INITIALIZE
+===================================================== */
 
 async function initialize() {
 
@@ -1643,17 +1526,14 @@ async function initialize() {
             error
         );
 
-
-        /* DB가 잠시 실패해도 화면 자체는 표시 */
-
         await updateAuthUI(null);
     }
 }
 
 
-/* =========================================================
+/* =====================================================
    AUTH STATE
-========================================================= */
+===================================================== */
 
 client.auth.onAuthStateChange(
     function(event, session) {
@@ -1666,7 +1546,7 @@ client.auth.onAuthStateChange(
         ) {
 
             setTimeout(
-                function() {
+                () => {
 
                     updateAuthUI(
                         session?.user || null
@@ -1681,16 +1561,15 @@ client.auth.onAuthStateChange(
 );
 
 
-/* =========================================================
+/* =====================================================
    LOGOUT
-========================================================= */
+===================================================== */
 
 logoutBtn.addEventListener(
     "click",
     async function() {
 
-        logoutBtn.disabled =
-            true;
+        logoutBtn.disabled = true;
 
 
         const {
@@ -1699,14 +1578,12 @@ logoutBtn.addEventListener(
             await client.auth.signOut();
 
 
-        logoutBtn.disabled =
-            false;
+        logoutBtn.disabled = false;
 
 
         if (error) {
 
             console.error(
-                "로그아웃 실패:",
                 error
             );
 
@@ -1723,9 +1600,9 @@ logoutBtn.addEventListener(
 );
 
 
-/* =========================================================
+/* =====================================================
    CREATE / UPDATE
-========================================================= */
+===================================================== */
 
 saveNoticeBtn.addEventListener(
     "click",
@@ -1747,26 +1624,21 @@ saveNoticeBtn.addEventListener(
         const title =
             noticeTitle.value.trim();
 
-
         const content =
             noticeContent.value.trim();
 
 
-        if (
-            title.length === 0 ||
-            content.length === 0
-        ) {
+        if (!title || !content) {
 
             alert(
-                "제목과 내용을 모두 입력해주세요."
+                "제목과 내용을 입력해주세요."
             );
 
             return;
         }
 
 
-        saveNoticeBtn.disabled =
-            true;
+        saveNoticeBtn.disabled = true;
 
 
         try {
@@ -1784,8 +1656,8 @@ saveNoticeBtn.addEventListener(
                             "announcements"
                         )
                         .insert({
-                            title: title,
-                            content: content
+                            title,
+                            content
                         });
 
             } else {
@@ -1796,8 +1668,8 @@ saveNoticeBtn.addEventListener(
                             "announcements"
                         )
                         .update({
-                            title: title,
-                            content: content,
+                            title,
+                            content,
                             updated_at:
                                 new Date()
                                     .toISOString()
@@ -1826,26 +1698,23 @@ saveNoticeBtn.addEventListener(
                 error
             );
 
-
             alert(
                 "공지 저장 실패\n\n" +
                 error.message
             );
 
-
         } finally {
 
-            saveNoticeBtn.disabled =
-                false;
+            saveNoticeBtn.disabled = false;
         }
 
     }
 );
 
 
-/* =========================================================
+/* =====================================================
    EDIT
-========================================================= */
+===================================================== */
 
 async function editNotice(id) {
 
@@ -1870,11 +1739,6 @@ async function editNotice(id) {
 
 
     if (error || !data) {
-
-        console.error(
-            "공지 조회 실패:",
-            error
-        );
 
         alert(
             "공지사항을 불러오지 못했습니다."
@@ -1916,31 +1780,22 @@ async function editNotice(id) {
 }
 
 
-/* =========================================================
+/* =====================================================
    RESET
-========================================================= */
+===================================================== */
 
 function resetNoticeForm() {
 
-    editingNoticeId =
-        null;
+    editingNoticeId = null;
 
-
-    noticeTitle.value =
-        "";
-
-
-    noticeContent.value =
-        "";
-
+    noticeTitle.value = "";
+    noticeContent.value = "";
 
     adminHeading.textContent =
         "관리자 공지 작성";
 
-
     saveNoticeBtn.textContent =
         "공지 등록";
-
 
     cancelEditBtn.classList.add(
         "hidden"
@@ -1954,9 +1809,9 @@ cancelEditBtn.addEventListener(
 );
 
 
-/* =========================================================
+/* =====================================================
    DELETE
-========================================================= */
+===================================================== */
 
 async function deleteNotice(id) {
 
@@ -1995,12 +1850,10 @@ async function deleteNotice(id) {
             error
         );
 
-
         alert(
             "공지 삭제 실패\n\n" +
             error.message
         );
-
 
         return;
     }
@@ -2018,18 +1871,16 @@ async function deleteNotice(id) {
 }
 
 
-/* =========================================================
+/* =====================================================
    COPY
-========================================================= */
+===================================================== */
 
 copyBtn.addEventListener(
     "click",
     async function() {
 
         const address =
-            serverAddress
-                .textContent
-                .trim();
+            serverAddress.textContent.trim();
 
 
         try {
@@ -2047,11 +1898,9 @@ copyBtn.addEventListener(
 
 
             setTimeout(
-                function() {
-
+                () => {
                     copyBtn.textContent =
                         oldText;
-
                 },
                 1300
             );
@@ -2069,9 +1918,9 @@ copyBtn.addEventListener(
 );
 
 
-/* =========================================================
+/* =====================================================
    START
-========================================================= */
+===================================================== */
 
 initialize();
 
