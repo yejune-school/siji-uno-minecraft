@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>시지중 마인크래프트</title>
+<title>로그인 - 시지중 마인크래프트</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -13,637 +13,298 @@
     box-sizing: border-box;
 }
 
+html,
+body {
+    margin: 0;
+    width: 100%;
+    min-height: 100%;
+}
+
 html {
-    scroll-behavior: smooth;
-    background: #070b10;
+    background: #080c10;
 }
 
 body {
-    margin: 0;
     min-height: 100vh;
 
-    background-color: #070b10;
-
-    background-image:
-        linear-gradient(
-            rgba(5, 10, 15, 0.72),
-            rgba(5, 10, 15, 0.92)
-        ),
-        url("./minecraft.png");
-
-    background-position: center;
-    background-size: cover;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-
-    color: #eef5fb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     font-family:
         Arial,
         "Noto Sans KR",
         "Malgun Gothic",
         sans-serif;
-}
 
-a {
-    color: inherit;
-    text-decoration: none;
-}
+    color: white;
 
-button,
-input,
-textarea {
-    font: inherit;
-}
+    background-color: #080c10;
 
-button {
-    cursor: pointer;
-}
+    background-image:
+        linear-gradient(
+            rgba(4,8,12,.28),
+            rgba(4,8,12,.55)
+        ),
+        url("./minecraft.png");
 
-.hidden {
-    display: none !important;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 
 /* =========================
-   HEADER
+   WRAPPER
 ========================= */
 
-.site-header {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-
-    background: rgba(5, 9, 13, 0.94);
-    border-bottom: 1px solid rgba(255,255,255,0.07);
-
-    backdrop-filter: blur(14px);
+.login-wrap {
+    width: 100%;
+    max-width: 450px;
+    padding: 20px;
 }
 
-.header-inner {
-    width: min(1180px, calc(100% - 32px));
-    min-height: 58px;
 
-    margin: 0 auto;
+/* =========================
+   CARD
+========================= */
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.login-card {
+    width: 100%;
+
+    padding: 39px 40px 31px;
+
+    border-radius: 14px;
+
+    background: rgba(29,31,34,.97);
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.48),
+        0 0 0 1px rgba(255,255,255,.035);
 }
+
+
+/* =========================
+   BRAND
+========================= */
 
 .brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    font-size: 16px;
-    font-weight: 700;
+    text-align: center;
+    margin-bottom: 30px;
 }
 
-.brand-icon {
-    width: 34px;
-    height: 34px;
+.brand-mark {
+    width: 44px;
+    height: 44px;
+
+    margin: 0 auto 16px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border-radius: 9px;
+    border-radius: 11px;
 
     background: #287dc8;
     color: white;
 
-    font-size: 17px;
+    font-size: 21px;
     font-weight: 900;
 }
 
-.header-right {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
+.brand-name {
+    margin-bottom: 23px;
 
-#userName {
-    color: #72bfff;
-    font-size: 13px;
-}
-
-.header-button {
-    padding: 8px 13px;
-
-    border: 1px solid rgba(130,160,190,0.22);
-    border-radius: 8px;
-
-    background: rgba(255,255,255,0.025);
     color: #dce8f3;
-}
-
-.header-button:hover {
-    background: rgba(60,140,220,0.10);
-}
-
-
-/* =========================
-   NAV
-========================= */
-
-.nav {
-    width: min(1180px, calc(100% - 32px));
-    height: 42px;
-
-    margin: 0 auto;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    gap: 30px;
-}
-
-.nav a {
-    color: #8898a8;
-    font-size: 13px;
-}
-
-.nav a:hover {
-    color: #71bbff;
-}
-
-
-/* =========================
-   MAIN
-========================= */
-
-main {
-    width: min(1180px, calc(100% - 32px));
-
-    margin: 0 auto;
-    padding-bottom: 100px;
-}
-
-
-/* =========================
-   HERO
-========================= */
-
-.hero {
-    padding: 100px 0 78px;
-}
-
-.hero-badge {
-    display: inline-block;
-
-    margin-bottom: 18px;
-    padding: 7px 11px;
-
-    border-radius: 999px;
-    border: 1px solid rgba(75,160,235,0.22);
-
-    color: #71baff;
-    background: rgba(37,112,180,0.08);
-
-    font-size: 11px;
-    font-weight: 700;
-}
-
-.hero h1 {
-    max-width: 800px;
-
-    margin: 0;
-
-    font-size: clamp(40px, 6vw, 70px);
-    line-height: 1.06;
-    letter-spacing: -3px;
-}
-
-.hero h1 span {
-    color: #56aaff;
-}
-
-.hero p {
-    max-width: 700px;
-
-    margin: 23px 0 0;
-
-    color: #91a2b2;
 
     font-size: 15px;
-    line-height: 1.85;
+    font-weight: 600;
 }
 
-
-/* =========================
-   SERVER
-========================= */
-
-.server-box {
-    padding: 22px 24px;
-
-    border: 1px solid rgba(74,156,230,0.28);
-    border-radius: 13px;
-
-    background:
-        linear-gradient(
-            120deg,
-            rgba(35,90,140,0.16),
-            rgba(12,19,26,0.94)
-        );
-}
-
-.server-box-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 15px;
-    flex-wrap: wrap;
-}
-
-.server-caption {
-    color: #65798b;
-
-    font-size: 10px;
-    letter-spacing: 1px;
-    font-weight: 700;
-}
-
-.server-address {
-    margin-top: 5px;
-
-    color: #72baff;
-
-    font-size: 21px;
-    font-weight: 700;
-}
-
-.copy-button {
-    padding: 10px 14px;
-
-    border: 1px solid rgba(75,163,239,0.32);
-    border-radius: 8px;
-
-    background: rgba(40,125,205,0.10);
-    color: #b9ddfb;
-
-    font-size: 12px;
-}
-
-
-/* =========================
-   SECTION
-========================= */
-
-.section {
-    margin-top: 88px;
-    scroll-margin-top: 115px;
-}
-
-.section-title {
+.brand h1 {
     margin: 0;
 
-    font-size: 27px;
+    font-size: 29px;
     letter-spacing: -1px;
 }
 
-.section-subtitle {
-    margin: 8px 0 21px;
+.brand p {
+    margin: 12px 0 0;
 
-    color: #687b8d;
-
+    color: #a8afb6;
     font-size: 13px;
 }
 
 
 /* =========================
-   NOTICE
+   TABS
 ========================= */
 
-.notice-list {
+.tabs {
     display: grid;
-    gap: 12px;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 6px;
+
+    margin-bottom: 21px;
 }
 
-.notice-card {
-    padding: 20px 21px;
+.tab {
+    height: 42px;
 
-    border: 1px solid rgba(93,132,164,0.18);
-    border-radius: 12px;
-
-    background: rgba(13,20,27,0.94);
-}
-
-.notice-card:hover {
-    border-color: rgba(71,158,232,0.35);
-}
-
-.notice-title {
-    margin: 0 0 9px;
-    font-size: 17px;
-}
-
-.notice-content {
-    margin: 0;
-
-    color: #a8b7c5;
-
-    font-size: 13px;
-    line-height: 1.8;
-
-    white-space: pre-wrap;
-}
-
-.notice-date {
-    display: block;
-
-    margin-top: 13px;
-
-    color: #617488;
-
-    font-size: 11px;
-}
-
-.notice-actions {
-    margin-top: 15px;
-
-    display: flex;
-    gap: 7px;
-}
-
-.notice-action {
-    padding: 7px 10px;
-
-    border: 1px solid rgba(130,160,190,0.18);
-    border-radius: 7px;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 5px;
 
     background: transparent;
-    color: #b4c5d5;
-
-    font-size: 11px;
-}
-
-.notice-action:hover {
-    background: rgba(255,255,255,0.04);
-}
-
-.notice-delete {
-    color: #ff9d9d;
-}
-
-.empty-notice {
-    padding: 38px 20px;
-
-    text-align: center;
-
-    border: 1px dashed rgba(100,135,165,0.22);
-    border-radius: 12px;
-
-    background: rgba(12,19,25,0.72);
-
-    color: #718497;
+    color: #aeb5bc;
 
     font-size: 13px;
 }
 
+.tab.active {
+    background: #246cae;
+
+    border-color: #388edc;
+
+    color: white;
+}
+
 
 /* =========================
-   ADMIN
+   INPUT
 ========================= */
 
-.admin-panel {
-    display: none;
-
-    margin-top: 15px;
-    padding: 20px;
-
-    border: 1px solid rgba(66,151,226,0.25);
-    border-radius: 12px;
-
-    background: rgba(12,21,29,0.96);
+.field {
+    margin-bottom: 15px;
 }
 
-.admin-heading {
-    margin: 0 0 14px;
+.field-label {
+    display: block;
 
-    color: #73bcff;
-    font-size: 15px;
+    margin-bottom: 7px;
+
+    color: #b6bec6;
+
+    font-size: 11px;
 }
 
-.admin-input,
-.admin-textarea {
+.field-input {
     width: 100%;
+    height: 48px;
 
-    border: 1px solid rgba(130,160,190,0.19);
-    border-radius: 8px;
+    padding: 0 13px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.27);
+
+    border-radius: 4px;
 
     outline: none;
 
-    padding: 12px 13px;
-
-    background: #080f16;
+    background: #292b2e;
     color: white;
 
-    font-size: 13px;
+    font-size: 14px;
 }
 
-.admin-input {
-    margin-bottom: 10px;
+.field-input::placeholder {
+    color: #777f87;
 }
 
-.admin-textarea {
-    min-height: 125px;
-    resize: vertical;
-}
+.field-input:focus {
+    border-color: #5eabec;
 
-.admin-input:focus,
-.admin-textarea:focus {
-    border-color: #4b9cdd;
-}
-
-.admin-buttons {
-    margin-top: 11px;
-
-    display: flex;
-    gap: 8px;
-}
-
-.admin-primary {
-    padding: 10px 14px;
-
-    border: 1px solid rgba(70,158,230,0.5);
-    border-radius: 8px;
-
-    background: #176cad;
-    color: white;
-
-    font-size: 12px;
-}
-
-.admin-primary:disabled {
-    opacity: .5;
-}
-
-.admin-cancel {
-    padding: 10px 14px;
-
-    border: 1px solid rgba(130,160,190,0.18);
-    border-radius: 8px;
-
-    background: transparent;
-    color: #aebdca;
-
-    font-size: 12px;
+    box-shadow:
+        0 0 0 1px #5eabec;
 }
 
 
 /* =========================
-   INFO
+   SUBMIT
 ========================= */
 
-.info-grid {
-    display: grid;
+.submit {
+    width: 100%;
+    height: 48px;
 
-    grid-template-columns: repeat(3, 1fr);
+    margin-top: 5px;
 
-    gap: 14px;
-}
+    border: 0;
+    border-radius: 4px;
 
-.info-card {
-    min-height: 165px;
-
-    padding: 21px;
-
-    border: 1px solid rgba(91,130,160,0.17);
-    border-radius: 12px;
-
-    background: rgba(13,21,28,0.92);
-}
-
-.info-icon {
-    width: 36px;
-    height: 36px;
-
-    margin-bottom: 20px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 9px;
-
-    background: rgba(65,151,224,0.09);
-    color: #6dbaff;
-
-    font-size: 16px;
-}
-
-.info-card h3 {
-    margin: 0 0 8px;
-    font-size: 16px;
-}
-
-.info-card p {
-    margin: 0;
-
-    color: #6f8395;
-
-    font-size: 12px;
-    line-height: 1.8;
-}
-
-
-/* =========================
-   CONTACT
-========================= */
-
-.contact-grid {
-    display: grid;
-
-    grid-template-columns: repeat(2, 1fr);
-
-    gap: 14px;
-}
-
-.social-card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 15px;
-
-    padding: 19px 20px;
-
-    border: 1px solid rgba(91,130,160,0.17);
-    border-radius: 12px;
-
-    background: rgba(13,21,28,0.92);
-}
-
-.social-card:hover {
-    border-color: rgba(68,157,231,0.38);
-}
-
-.social-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.instagram-icon {
-    width: 39px;
-    height: 39px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 10px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #467cff,
-            #765de8
-        );
-
+    background: #246cae;
     color: white;
-    font-size: 18px;
-}
 
-.social-name {
     font-size: 14px;
     font-weight: 700;
 }
 
-.social-id {
-    margin-top: 3px;
-
-    color: #66798b;
-    font-size: 11px;
+.submit:hover {
+    background: #2d82cb;
 }
 
-.social-link {
-    color: #64b2ff;
-    font-size: 11px;
+.submit:disabled {
+    opacity: .55;
+    cursor: wait;
 }
 
 
 /* =========================
-   FOOTER
+   MESSAGE
 ========================= */
 
-footer {
-    width: min(1180px, calc(100% - 32px));
+.message {
+    min-height: 21px;
 
-    margin: 0 auto;
+    margin-top: 14px;
 
-    padding: 28px 0 40px;
+    text-align: center;
 
-    border-top: 1px solid rgba(255,255,255,0.05);
+    font-size: 12px;
+    line-height: 1.6;
+}
 
-    color: #536676;
+.message.error {
+    color: #ff9a9a;
+}
+
+.message.success {
+    color: #7fd0ff;
+}
+
+
+/* =========================
+   BOTTOM
+========================= */
+
+.bottom {
+    margin-top: 23px;
+    padding-top: 18px;
+
+    border-top: 1px solid rgba(255,255,255,.09);
+
+    text-align: center;
+}
+
+.bottom a {
+    color: #9da7b0;
+    font-size: 12px;
+}
+
+.bottom a:hover {
+    color: #69b6ff;
+}
+
+.page-note {
+    margin-top: 17px;
+
+    text-align: center;
+
+    color: rgba(255,255,255,.68);
 
     font-size: 11px;
-    line-height: 1.8;
 }
 
 
@@ -651,416 +312,150 @@ footer {
    MOBILE
 ========================= */
 
-@media (max-width: 760px) {
+@media (max-width: 500px) {
 
-    .header-inner {
-        width: calc(100% - 20px);
+    .login-wrap {
+        padding: 13px;
     }
 
-    main,
-    footer {
-        width: calc(100% - 28px);
+    .login-card {
+        padding: 31px 24px 27px;
     }
 
-    .nav {
-        width: calc(100% - 20px);
-        gap: 17px;
-    }
-
-    .nav a {
-        font-size: 12px;
-    }
-
-    .brand {
-        font-size: 14px;
-    }
-
-    #userName {
-        display: none;
-    }
-
-    .hero {
-        padding: 65px 0 58px;
-    }
-
-    .hero h1 {
-        letter-spacing: -2px;
-    }
-
-    .info-grid,
-    .contact-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .server-address {
-        font-size: 18px;
+    .brand h1 {
+        font-size: 26px;
     }
 }
-
 </style>
 </head>
 
 
 <body>
 
-<header class="site-header">
+<div class="login-wrap">
 
-    <div class="header-inner">
+    <div class="login-card">
 
-        <a href="./index.html" class="brand">
+        <div class="brand">
 
-            <div class="brand-icon">
+            <div class="brand-mark">
                 ◆
             </div>
 
-            <div>
+            <div class="brand-name">
                 시지중 마인크래프트
             </div>
 
-        </a>
+            <h1 id="pageTitle">
+                로그인
+            </h1>
+
+            <p id="pageDescription">
+                시지중 마인크래프트 서버 이용
+            </p>
+
+        </div>
 
 
-        <div class="header-right">
+        <div class="tabs">
 
-            <span id="userName"></span>
-
-            <a
-                id="loginBtn"
-                href="./login.html"
-                class="header-button"
+            <button
+                id="loginTab"
+                class="tab active"
+                type="button"
             >
                 로그인
-            </a>
+            </button>
 
             <button
-                id="logoutBtn"
-                class="header-button hidden"
+                id="signupTab"
+                class="tab"
                 type="button"
             >
-                로그아웃
+                회원가입
             </button>
+
+        </div>
+
+
+        <form id="authForm">
+
+            <div class="field">
+
+                <label
+                    class="field-label"
+                    for="email"
+                >
+                    이메일
+                </label>
+
+                <input
+                    id="email"
+                    class="field-input"
+                    type="email"
+                    placeholder="이메일을 입력하세요"
+                    autocomplete="email"
+                    required
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label
+                    class="field-label"
+                    for="password"
+                >
+                    비밀번호
+                </label>
+
+                <input
+                    id="password"
+                    class="field-input"
+                    type="password"
+                    placeholder="비밀번호를 입력하세요"
+                    autocomplete="current-password"
+                    minlength="6"
+                    required
+                >
+
+            </div>
+
+
+            <button
+                id="submitBtn"
+                class="submit"
+                type="submit"
+            >
+                로그인
+            </button>
+
+        </form>
+
+
+        <div
+            id="message"
+            class="message"
+        ></div>
+
+
+        <div class="bottom">
+
+            <a href="./index.html">
+                ← 메인 페이지로 돌아가기
+            </a>
 
         </div>
 
     </div>
 
 
-    <nav class="nav">
-
-        <a href="#home">홈</a>
-        <a href="#notices">공지사항</a>
-        <a href="#participation">참여방법</a>
-        <a href="#contact">문의</a>
-
-    </nav>
-
-</header>
-
-
-<main>
-
-    <section id="home" class="hero">
-
-        <div class="hero-badge">
-            ● SIJI MINECRAFT SERVER
-        </div>
-
-
-        <h1>
-            시지중 학생들과 함께<br>
-            <span>새로운 월드</span>를 만들어보세요.
-        </h1>
-
-
-        <p>
-            시지중학교 학생들을 위한 비공식 마인크래프트 서버입니다.
-            친구들과 함께 건축하고 탐험하며 새로운 월드를 만들어보세요.
-        </p>
-
-    </section>
-
-
-    <div class="server-box">
-
-        <div class="server-box-top">
-
-            <div>
-
-                <div class="server-caption">
-                    JAVA EDITION SERVER
-                </div>
-
-                <div
-                    id="serverAddress"
-                    class="server-address"
-                >
-                    sijiminecraft.m-c.kr
-                </div>
-
-            </div>
-
-
-            <button
-                id="copyBtn"
-                class="copy-button"
-                type="button"
-            >
-                서버 주소 복사
-            </button>
-
-        </div>
-
+    <div class="page-note">
+        시지중학교 비공식 마인크래프트 서버
     </div>
 
-
-    <section
-        id="notices"
-        class="section"
-    >
-
-        <h2 class="section-title">
-            공지사항
-        </h2>
-
-        <p class="section-subtitle">
-            서버의 새로운 소식과 중요한 안내입니다.
-        </p>
-
-
-        <div
-            id="noticeList"
-            class="notice-list"
-        >
-
-            <div class="empty-notice">
-                공지사항을 불러오는 중입니다.
-            </div>
-
-        </div>
-
-
-        <div
-            id="adminPanel"
-            class="admin-panel"
-        >
-
-            <h3
-                id="adminHeading"
-                class="admin-heading"
-            >
-                관리자 공지 작성
-            </h3>
-
-
-            <input
-                id="noticeTitle"
-                class="admin-input"
-                type="text"
-                maxlength="100"
-                placeholder="공지 제목"
-            >
-
-
-            <textarea
-                id="noticeContent"
-                class="admin-textarea"
-                placeholder="공지 내용을 입력하세요."
-            ></textarea>
-
-
-            <div class="admin-buttons">
-
-                <button
-                    id="saveNoticeBtn"
-                    class="admin-primary"
-                    type="button"
-                >
-                    공지 등록
-                </button>
-
-
-                <button
-                    id="cancelEditBtn"
-                    class="admin-cancel hidden"
-                    type="button"
-                >
-                    수정 취소
-                </button>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <section
-        id="participation"
-        class="section"
-    >
-
-        <h2 class="section-title">
-            참여방법
-        </h2>
-
-        <p class="section-subtitle">
-            서버에 참여하기 전에 확인해주세요.
-        </p>
-
-
-        <div class="info-grid">
-
-            <article class="info-card">
-
-                <div class="info-icon">
-                    ✓
-                </div>
-
-                <h3>
-                    시지중 학생
-                </h3>
-
-                <p>
-                    시지중학교 학생은 누구나 참여할 수 있습니다.
-                </p>
-
-            </article>
-
-
-            <article class="info-card">
-
-                <div class="info-icon">
-                    ?
-                </div>
-
-                <h3>
-                    타중 학생
-                </h3>
-
-                <p>
-                    타 학교 학생은 서버 인스타그램으로 문의해주세요.
-                </p>
-
-            </article>
-
-
-            <article class="info-card">
-
-                <div class="info-icon">
-                    ⛏
-                </div>
-
-                <h3>
-                    접속 방법
-                </h3>
-
-                <p>
-                    Minecraft Java Edition에서 서버 주소를 입력하여 접속하세요.
-                </p>
-
-            </article>
-
-        </div>
-
-    </section>
-
-
-    <section
-        id="contact"
-        class="section"
-    >
-
-        <h2 class="section-title">
-            문의하기
-        </h2>
-
-        <p class="section-subtitle">
-            서버 관련 문의는 인스타그램을 이용해주세요.
-        </p>
-
-
-        <div class="contact-grid">
-
-            <a
-                class="social-card"
-                href="https://www.instagram.com/sijiminecraft.m_c.kr/"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-
-                <div class="social-left">
-
-                    <div class="instagram-icon">
-                        ◎
-                    </div>
-
-                    <div>
-
-                        <div class="social-name">
-                            서버 인스타그램
-                        </div>
-
-                        <div class="social-id">
-                            @sijiminecraft.m_c.kr
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <span class="social-link">
-                    인스타그램 바로가기 →
-                </span>
-
-            </a>
-
-
-            <a
-                class="social-card"
-                href="https://www.instagram.com/y2._uin/"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-
-                <div class="social-left">
-
-                    <div class="instagram-icon">
-                        ◎
-                    </div>
-
-                    <div>
-
-                        <div class="social-name">
-                            운영자 인스타그램
-                        </div>
-
-                        <div class="social-id">
-                            @y2._uin
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <span class="social-link">
-                    인스타그램 바로가기 →
-                </span>
-
-            </a>
-
-        </div>
-
-    </section>
-
-</main>
-
-
-<footer>
-    시지중학교 비공식 마인크래프트 서버<br>
-    본 서버는 시지중학교 공식 기관과 무관한 비공식 서버입니다.
-</footer>
+</div>
 
 
 <script>
@@ -1075,7 +470,14 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
     "sb_publishable_Df6zehKD_EARd9VnjMmtZw_GXvjE0uA";
 
-const client =
+
+/*
+   중요:
+   변수 이름을 supabaseClient로 사용.
+   'supabase'라는 전역 이름과 충돌하지 않음.
+*/
+
+const supabaseClient =
     window.supabase.createClient(
         SUPABASE_URL,
         SUPABASE_KEY,
@@ -1090,344 +492,388 @@ const client =
 
 
 /* =====================================================
-   ADMIN UUID
-===================================================== */
-
-const ADMIN_UUID =
-    "1cbc80a5-1c59-4696-b4ab-28ec455156f0";
-
-
-/* =====================================================
    DOM
 ===================================================== */
 
-const userName =
-    document.getElementById("userName");
+const authForm =
+    document.getElementById("authForm");
 
-const loginBtn =
-    document.getElementById("loginBtn");
+const emailInput =
+    document.getElementById("email");
 
-const logoutBtn =
-    document.getElementById("logoutBtn");
+const passwordInput =
+    document.getElementById("password");
 
-const noticeList =
-    document.getElementById("noticeList");
+const loginTab =
+    document.getElementById("loginTab");
 
-const adminPanel =
-    document.getElementById("adminPanel");
+const signupTab =
+    document.getElementById("signupTab");
 
-const adminHeading =
-    document.getElementById("adminHeading");
+const submitBtn =
+    document.getElementById("submitBtn");
 
-const noticeTitle =
-    document.getElementById("noticeTitle");
+const message =
+    document.getElementById("message");
 
-const noticeContent =
-    document.getElementById("noticeContent");
+const pageTitle =
+    document.getElementById("pageTitle");
 
-const saveNoticeBtn =
-    document.getElementById("saveNoticeBtn");
+const pageDescription =
+    document.getElementById("pageDescription");
 
-const cancelEditBtn =
-    document.getElementById("cancelEditBtn");
 
-const copyBtn =
-    document.getElementById("copyBtn");
-
-const serverAddress =
-    document.getElementById("serverAddress");
+let authMode = "login";
 
 
 /* =====================================================
-   STATE
+   HOME REDIRECT
 ===================================================== */
 
-let currentUser = null;
-let isAdmin = false;
-let editingNoticeId = null;
+function goToHome() {
+
+    const homeUrl =
+        new URL(
+            "./index.html",
+            window.location.href
+        ).href;
 
 
-/* =====================================================
-   XSS
-===================================================== */
-
-function escapeHTML(value) {
-
-    return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
-
-
-/* =====================================================
-   DATE
-===================================================== */
-
-function formatDate(value) {
-
-    if (!value) return "";
-
-    const date =
-        new Date(value);
-
-    if (Number.isNaN(date.getTime())) {
-        return "";
-    }
-
-    return date.toLocaleString(
-        "ko-KR",
-        {
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-            hour: "2-digit",
-            minute: "2-digit"
-        }
+    window.location.replace(
+        homeUrl
     );
 }
 
 
 /* =====================================================
-   ADMIN
+   MESSAGE
 ===================================================== */
 
-async function checkAdmin(user) {
+function showMessage(
+    text,
+    type = "error"
+) {
 
-    if (!user) {
-        return false;
-    }
+    message.textContent =
+        text;
 
-
-    const {
-        data,
-        error
-    } =
-        await client
-            .from("admins")
-            .select("user_id")
-            .eq(
-                "user_id",
-                user.id
-            )
-            .maybeSingle();
-
-
-    if (error) {
-
-        console.error(
-            "관리자 확인 실패:",
-            error
-        );
-
-        return false;
-    }
-
-
-    const result =
-        !!data &&
-        data.user_id === ADMIN_UUID;
-
-
-    console.log(
-        "is_admin ->",
-        result
-    );
-
-
-    return result;
+    message.className =
+        "message " + type;
 }
 
 
 /* =====================================================
-   NOTICE
+   MODE
 ===================================================== */
 
-async function loadAnnouncements() {
+function setMode(mode) {
 
-    noticeList.innerHTML = `
-        <div class="empty-notice">
-            공지사항을 불러오는 중입니다.
-        </div>
-    `;
+    authMode = mode;
+
+    showMessage("");
 
 
-    const {
-        data,
-        error
-    } =
-        await client
-            .from("announcements")
-            .select(
-                "id,title,content,created_at,updated_at"
-            )
-            .order(
-                "created_at",
-                {
-                    ascending: false
-                }
-            );
+    if (mode === "login") {
 
-
-    if (error) {
-
-        console.error(
-            "공지사항 불러오기 실패:",
-            error
+        loginTab.classList.add(
+            "active"
         );
 
+        signupTab.classList.remove(
+            "active"
+        );
 
-        noticeList.innerHTML = `
-            <div class="empty-notice">
-                공지사항을 불러오지 못했습니다.
-            </div>
-        `;
+        pageTitle.textContent =
+            "로그인";
 
-        return;
+        pageDescription.textContent =
+            "시지중 마인크래프트 서버 이용";
+
+        submitBtn.textContent =
+            "로그인";
+
+        passwordInput.autocomplete =
+            "current-password";
+
+    } else {
+
+        loginTab.classList.remove(
+            "active"
+        );
+
+        signupTab.classList.add(
+            "active"
+        );
+
+        pageTitle.textContent =
+            "회원가입";
+
+        pageDescription.textContent =
+            "시지중 마인크래프트 서버 계정 만들기";
+
+        submitBtn.textContent =
+            "회원가입";
+
+        passwordInput.autocomplete =
+            "new-password";
     }
-
-
-    if (
-        !Array.isArray(data) ||
-        data.length === 0
-    ) {
-
-        noticeList.innerHTML = `
-            <div class="empty-notice">
-                현재 등록된 공지사항이 없습니다.
-            </div>
-        `;
-
-        return;
-    }
-
-
-    noticeList.innerHTML =
-        data.map(
-            item => {
-
-                const id =
-                    Number(item.id);
-
-                const title =
-                    escapeHTML(item.title);
-
-                const content =
-                    escapeHTML(item.content);
-
-                const created =
-                    escapeHTML(
-                        formatDate(
-                            item.created_at
-                        )
-                    );
-
-
-                const edited =
-                    item.updated_at &&
-                    item.created_at &&
-                    new Date(item.updated_at)
-                        .getTime()
-                    >
-                    new Date(item.created_at)
-                        .getTime();
-
-
-                const actions =
-                    isAdmin
-                        ? `
-                            <div class="notice-actions">
-
-                                <button
-                                    type="button"
-                                    class="notice-action"
-                                    data-action="edit"
-                                    data-id="${id}"
-                                >
-                                    수정
-                                </button>
-
-                                <button
-                                    type="button"
-                                    class="notice-action notice-delete"
-                                    data-action="delete"
-                                    data-id="${id}"
-                                >
-                                    삭제
-                                </button>
-
-                            </div>
-                        `
-                        : "";
-
-
-                return `
-                    <article class="notice-card">
-
-                        <h3 class="notice-title">
-                            ${title}
-                        </h3>
-
-                        <p class="notice-content">
-                            ${content}
-                        </p>
-
-                        <span class="notice-date">
-                            작성일: ${created}
-                            ${edited ? " · 수정됨" : ""}
-                        </span>
-
-                        ${actions}
-
-                    </article>
-                `;
-            }
-        ).join("");
 }
 
 
 /* =====================================================
-   EVENT DELEGATION
+   TAB
 ===================================================== */
 
-noticeList.addEventListener(
+loginTab.addEventListener(
     "click",
+    function() {
+
+        setMode("login");
+
+    }
+);
+
+
+signupTab.addEventListener(
+    "click",
+    function() {
+
+        setMode("signup");
+
+    }
+);
+
+
+/* =====================================================
+   AUTH
+===================================================== */
+
+authForm.addEventListener(
+    "submit",
     async function(event) {
 
-        const button =
-            event.target.closest(
-                "button[data-action]"
+        event.preventDefault();
+
+
+        const email =
+            emailInput.value.trim();
+
+        const password =
+            passwordInput.value;
+
+
+        if (!email || !password) {
+
+            showMessage(
+                "이메일과 비밀번호를 입력해주세요."
             );
 
-
-        if (!button) {
             return;
         }
 
 
-        const action =
-            button.dataset.action;
+        submitBtn.disabled = true;
 
-        const id =
-            Number(
-                button.dataset.id
+
+        showMessage(
+            "처리 중입니다...",
+            "success"
+        );
+
+
+        try {
+
+            /* ==============================
+               LOGIN
+            ============================== */
+
+            if (authMode === "login") {
+
+                const {
+                    data,
+                    error
+                } =
+                    await supabaseClient
+                        .auth
+                        .signInWithPassword({
+                            email,
+                            password
+                        });
+
+
+                if (error) {
+                    throw error;
+                }
+
+
+                /* 세션 확인 */
+
+                const {
+                    data: sessionData,
+                    error: sessionError
+                } =
+                    await supabaseClient
+                        .auth
+                        .getSession();
+
+
+                if (sessionError) {
+                    throw sessionError;
+                }
+
+
+                if (
+                    !sessionData.session ||
+                    !sessionData.session.user
+                ) {
+
+                    throw new Error(
+                        "로그인은 되었지만 세션을 확인하지 못했습니다."
+                    );
+                }
+
+
+                showMessage(
+                    "로그인되었습니다. 이동 중...",
+                    "success"
+                );
+
+
+                setTimeout(
+                    function() {
+
+                        goToHome();
+
+                    },
+                    300
+                );
+
+
+                return;
+            }
+
+
+            /* ==============================
+               SIGN UP
+            ============================== */
+
+            const {
+                data,
+                error
+            } =
+                await supabaseClient
+                    .auth
+                    .signUp({
+                        email,
+                        password
+                    });
+
+
+            if (error) {
+                throw error;
+            }
+
+
+            /*
+               이메일 인증이 꺼져 있으면
+               가입 즉시 세션이 만들어질 수 있음.
+            */
+
+            if (data.session?.user) {
+
+                showMessage(
+                    "회원가입이 완료되었습니다. 이동 중...",
+                    "success"
+                );
+
+
+                setTimeout(
+                    function() {
+
+                        goToHome();
+
+                    },
+                    300
+                );
+
+
+                return;
+            }
+
+
+            /*
+               이메일 인증이 필요한 경우
+            */
+
+            setMode("login");
+
+            emailInput.value =
+                email;
+
+            passwordInput.value =
+                "";
+
+
+            showMessage(
+                "회원가입이 완료되었습니다. 이메일 인증 후 로그인해주세요.",
+                "success"
             );
 
 
-        if (!Number.isInteger(id)) {
-            return;
-        }
+        } catch (error) {
+
+            console.error(
+                "AUTH ERROR:",
+                error
+            );
 
 
-        if (action === "edit") {
-            await editNotice(id);
-        }
+            const msg =
+                error?.message || "";
 
 
-        if (action === "delete") {
-            await deleteNotice(id);
+            if (
+                msg.includes(
+                    "Invalid login credentials"
+                )
+            ) {
+
+                showMessage(
+                    "이메일 또는 비밀번호가 올바르지 않습니다."
+                );
+
+            } else if (
+                msg.toLowerCase().includes(
+                    "already registered"
+                )
+            ) {
+
+                showMessage(
+                    "이미 가입된 이메일입니다."
+                );
+
+            } else if (
+                msg.includes(
+                    "Password should be at least"
+                )
+            ) {
+
+                showMessage(
+                    "비밀번호는 최소 6자 이상이어야 합니다."
+                );
+
+            } else {
+
+                showMessage(
+                    msg ||
+                    "로그인 처리 중 오류가 발생했습니다."
+                );
+            }
+
+        } finally {
+
+            submitBtn.disabled =
+                false;
         }
 
     }
@@ -1435,70 +881,10 @@ noticeList.addEventListener(
 
 
 /* =====================================================
-   AUTH UI
+   EXISTING SESSION
 ===================================================== */
 
-async function updateAuthUI(user) {
-
-    currentUser =
-        user || null;
-
-
-    if (!currentUser) {
-
-        isAdmin = false;
-
-        userName.textContent = "";
-
-        loginBtn.classList.remove(
-            "hidden"
-        );
-
-        logoutBtn.classList.add(
-            "hidden"
-        );
-
-        adminPanel.style.display =
-            "none";
-
-    } else {
-
-        userName.textContent =
-            currentUser.email?.split("@")[0]
-            || "사용자";
-
-
-        loginBtn.classList.add(
-            "hidden"
-        );
-
-        logoutBtn.classList.remove(
-            "hidden"
-        );
-
-
-        isAdmin =
-            await checkAdmin(
-                currentUser
-            );
-
-
-        adminPanel.style.display =
-            isAdmin
-                ? "block"
-                : "none";
-    }
-
-
-    await loadAnnouncements();
-}
-
-
-/* =====================================================
-   INITIALIZE
-===================================================== */
-
-async function initialize() {
+async function checkExistingSession() {
 
     try {
 
@@ -1506,7 +892,9 @@ async function initialize() {
             data,
             error
         } =
-            await client.auth.getSession();
+            await supabaseClient
+                .auth
+                .getSession();
 
 
         if (error) {
@@ -1514,19 +902,20 @@ async function initialize() {
         }
 
 
-        await updateAuthUI(
-            data.session?.user || null
-        );
+        if (
+            data.session?.user
+        ) {
+
+            goToHome();
+        }
 
 
     } catch (error) {
 
         console.error(
-            "초기화 실패:",
+            "세션 확인 오류:",
             error
         );
-
-        await updateAuthUI(null);
     }
 }
 
@@ -1535,383 +924,28 @@ async function initialize() {
    AUTH STATE
 ===================================================== */
 
-client.auth.onAuthStateChange(
+supabaseClient.auth.onAuthStateChange(
     function(event, session) {
 
         if (
-            event === "SIGNED_IN" ||
-            event === "SIGNED_OUT" ||
-            event === "INITIAL_SESSION" ||
-            event === "TOKEN_REFRESHED"
+            event === "SIGNED_IN" &&
+            session?.user
         ) {
-
-            setTimeout(
-                () => {
-
-                    updateAuthUI(
-                        session?.user || null
-                    );
-
-                },
-                0
-            );
-        }
-
-    }
-);
-
-
-/* =====================================================
-   LOGOUT
-===================================================== */
-
-logoutBtn.addEventListener(
-    "click",
-    async function() {
-
-        logoutBtn.disabled = true;
-
-
-        const {
-            error
-        } =
-            await client.auth.signOut();
-
-
-        logoutBtn.disabled = false;
-
-
-        if (error) {
-
-            console.error(
-                error
-            );
-
-            alert(
-                "로그아웃에 실패했습니다."
-            );
-
-            return;
-        }
-
-
-        await updateAuthUI(null);
-    }
-);
-
-
-/* =====================================================
-   CREATE / UPDATE
-===================================================== */
-
-saveNoticeBtn.addEventListener(
-    "click",
-    async function() {
-
-        if (
-            !currentUser ||
-            !isAdmin
-        ) {
-
-            alert(
-                "관리자만 사용할 수 있습니다."
-            );
-
-            return;
-        }
-
-
-        const title =
-            noticeTitle.value.trim();
-
-        const content =
-            noticeContent.value.trim();
-
-
-        if (!title || !content) {
-
-            alert(
-                "제목과 내용을 입력해주세요."
-            );
-
-            return;
-        }
-
-
-        saveNoticeBtn.disabled = true;
-
-
-        try {
-
-            let result;
-
 
             if (
-                editingNoticeId === null
+                window.location.pathname
+                    .endsWith("login.html")
             ) {
 
-                result =
-                    await client
-                        .from(
-                            "announcements"
-                        )
-                        .insert({
-                            title,
-                            content
-                        });
+                setTimeout(
+                    function() {
 
-            } else {
+                        goToHome();
 
-                result =
-                    await client
-                        .from(
-                            "announcements"
-                        )
-                        .update({
-                            title,
-                            content,
-                            updated_at:
-                                new Date()
-                                    .toISOString()
-                        })
-                        .eq(
-                            "id",
-                            editingNoticeId
-                        );
+                    },
+                    300
+                );
             }
-
-
-            if (result.error) {
-                throw result.error;
-            }
-
-
-            resetNoticeForm();
-
-            await loadAnnouncements();
-
-
-        } catch (error) {
-
-            console.error(
-                "공지 저장 실패:",
-                error
-            );
-
-            alert(
-                "공지 저장 실패\n\n" +
-                error.message
-            );
-
-        } finally {
-
-            saveNoticeBtn.disabled = false;
-        }
-
-    }
-);
-
-
-/* =====================================================
-   EDIT
-===================================================== */
-
-async function editNotice(id) {
-
-    if (!isAdmin) {
-        return;
-    }
-
-
-    const {
-        data,
-        error
-    } =
-        await client
-            .from(
-                "announcements"
-            )
-            .select(
-                "id,title,content"
-            )
-            .eq("id", id)
-            .maybeSingle();
-
-
-    if (error || !data) {
-
-        alert(
-            "공지사항을 불러오지 못했습니다."
-        );
-
-        return;
-    }
-
-
-    editingNoticeId =
-        Number(data.id);
-
-
-    noticeTitle.value =
-        data.title || "";
-
-
-    noticeContent.value =
-        data.content || "";
-
-
-    adminHeading.textContent =
-        "공지사항 수정";
-
-
-    saveNoticeBtn.textContent =
-        "공지 수정";
-
-
-    cancelEditBtn.classList.remove(
-        "hidden"
-    );
-
-
-    adminPanel.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-    });
-}
-
-
-/* =====================================================
-   RESET
-===================================================== */
-
-function resetNoticeForm() {
-
-    editingNoticeId = null;
-
-    noticeTitle.value = "";
-    noticeContent.value = "";
-
-    adminHeading.textContent =
-        "관리자 공지 작성";
-
-    saveNoticeBtn.textContent =
-        "공지 등록";
-
-    cancelEditBtn.classList.add(
-        "hidden"
-    );
-}
-
-
-cancelEditBtn.addEventListener(
-    "click",
-    resetNoticeForm
-);
-
-
-/* =====================================================
-   DELETE
-===================================================== */
-
-async function deleteNotice(id) {
-
-    if (!isAdmin) {
-        return;
-    }
-
-
-    if (
-        !window.confirm(
-            "이 공지사항을 삭제하시겠습니까?"
-        )
-    ) {
-        return;
-    }
-
-
-    const {
-        error
-    } =
-        await client
-            .from(
-                "announcements"
-            )
-            .delete()
-            .eq(
-                "id",
-                id
-            );
-
-
-    if (error) {
-
-        console.error(
-            "공지 삭제 실패:",
-            error
-        );
-
-        alert(
-            "공지 삭제 실패\n\n" +
-            error.message
-        );
-
-        return;
-    }
-
-
-    if (
-        editingNoticeId === id
-    ) {
-
-        resetNoticeForm();
-    }
-
-
-    await loadAnnouncements();
-}
-
-
-/* =====================================================
-   COPY
-===================================================== */
-
-copyBtn.addEventListener(
-    "click",
-    async function() {
-
-        const address =
-            serverAddress.textContent.trim();
-
-
-        try {
-
-            await navigator.clipboard
-                .writeText(address);
-
-
-            const oldText =
-                copyBtn.textContent;
-
-
-            copyBtn.textContent =
-                "복사 완료";
-
-
-            setTimeout(
-                () => {
-                    copyBtn.textContent =
-                        oldText;
-                },
-                1300
-            );
-
-
-        } catch {
-
-            alert(
-                "서버 주소:\n\n" +
-                address
-            );
         }
 
     }
@@ -1922,7 +956,7 @@ copyBtn.addEventListener(
    START
 ===================================================== */
 
-initialize();
+checkExistingSession();
 
 </script>
 
