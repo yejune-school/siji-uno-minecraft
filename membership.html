@@ -1445,7 +1445,7 @@
         data,
         error
       } = await supabaseClient
-        .from("membership_settings")
+        .from("membership_accounts")
         .select("*")
         .eq("id", 1)
         .maybeSingle();
@@ -1742,7 +1742,7 @@
         data,
         error
       } = await supabaseClient
-        .from("membership_settings")
+        .from("membership_accounts")
         .select("*")
         .eq("id", 1)
         .maybeSingle();
@@ -2095,7 +2095,7 @@
         const {
           error
         } = await supabaseClient
-          .from("membership_settings")
+          .from("membership_accounts")
           .upsert({
             id: 1,
             bank_name: bankName,
