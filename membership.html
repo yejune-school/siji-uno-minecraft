@@ -2101,7 +2101,6 @@
             bank_name: bankName,
             account_holder: accountHolder,
             account_number: accountNumber,
-            updated_at: new Date().toISOString()
           });
 
         if (error) throw error;
@@ -2126,17 +2125,21 @@
 
 
     async function copyBankAccount() {
-      const bankName = $("bankName").value.trim();
-      const accountHolder = $("accountHolder").value.trim();
-      const accountNumber = $("accountNumber").value.trim();
+      const bankContent = document.querySelector("#bankContent");
+      const bankItems = bankContent
+        ? bankContent.querySelectorAll(".bank-item strong")
+        : [];
 
-      const bankContent = document.querySelector(".bank-card");
+      if (!bankItems || bankItems.length < 3) {
+        showNotice("복사할 계좌 정보가 없습니다.", "error");
+        return;
+      }
 
       const text = [
         "시지중 마인크래프트 서버 입금 계좌",
-        "은행: " + bankName,
-        "예금주: " + accountHolder,
-        "계좌번호: " + accountNumber
+        "은행: " + bankItems[0].textContent.trim(),
+        "예금주: " + bankItems[1].textContent.trim(),
+        "계좌번호: " + bankItems[2].textContent.trim()
       ].join("\n");
 
       try {
@@ -2163,7 +2166,7 @@
       const option = select.options[select.selectedIndex];
 
       return {
-        name: option.textContent.trim(),
+        name: option.dataset.name || option.textContent.trim(),
         price: Number(option.dataset.price || 0)
       };
     }
